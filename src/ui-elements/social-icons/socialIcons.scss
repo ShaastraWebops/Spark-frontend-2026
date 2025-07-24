@@ -1,0 +1,108 @@
+.social-icons {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  color: white;
+
+  .social-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 40px;
+    margin: 10px 0;
+    padding: 5px 8px;
+    background-color: white;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+
+    &.youtube {
+
+      &:hover {
+        background-color: rgb(201, 6, 6);
+      }
+    }
+
+    &.instagram {
+
+      &:hover {
+        background: linear-gradient(45DEG, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #Fd1d1d);
+      }
+    }
+
+    &.facebook{
+
+      &:hover {
+        background-color: #3b5998;
+      }
+    }
+
+
+    &.linkedin {
+
+      &:hover {
+        background-color: #0a66c2;
+      }
+    }
+
+
+
+    &:hover {
+      animation: itemAnimation 1s;
+      width: 120px;
+
+      .social-label {
+        display: flex;
+        animation: lableAnimation 1s;
+      }
+
+      @keyframes lableAnimation {
+        0%{
+          transform: translateX(-80px);
+        }
+        100%{
+          transform: translateX(0px);
+        }
+      }
+
+
+      .social-img {
+        padding: 5px;
+        border-radius: 100%;
+        border: black solid 1px;
+        animation: imgAnimation 1s;
+        filter: invert(100%) sepia(23%) saturate(0%) hue-rotate(137deg) brightness(103%) contrast(104%);
+        height: 26px;
+      }
+
+      @keyframes imgAnimation {
+        0% {
+          transform: translateX(-80px);
+        }
+        100%{
+          transform: translateX(0px) rotate(360deg);
+        }
+      }
+
+    }
+
+    @keyframes itemAnimation {
+      0% {
+        width: 40px;
+      }
+
+      100% {
+        width: 120px;
+      }
+    }
+
+    .social-label {
+      display: none;
+    }
+
+    .social-img{
+      height: 36px;
+    }
+
+  }
+}
