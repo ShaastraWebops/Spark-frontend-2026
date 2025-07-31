@@ -1,5 +1,5 @@
 import React from 'react';
-import './structure.css';
+// import './structure.css';
 import i1 from '../../assets/1.jpg';
 import i2 from '../../assets/2.jpg';
 import i3 from '../../assets/3.jpg';
@@ -46,8 +46,9 @@ const Structure: React.FC = () => {
         <h2 className="text-3xl font-bold text-green-400 mb-2">Round 2</h2>
         <h4 className="text-xl font-semibold text-white mb-4">Online Case Study Competition</h4>
         <ul className="list-disc list-inside space-y-3 text-slate-300">
-          <li>A problem statement will be provided to qualified participants for Round 2.</li>
+          <li>A problem statement will be provided to qualified participants for Round 2. </li>
           <li>Teams must come up with an innovative solution for the same.</li>
+          <li>Further details will be conveyed later</li>
           <li><strong className="font-semibold text-green-300">Note:</strong> This is only for students who qualified in the first round.</li>
         </ul>
       </div>

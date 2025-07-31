@@ -6,6 +6,7 @@ import App from './App';
 import Login from './auth/Login';
 import Signup from './auth/Signup';
 import './index.css';
+import SchedulePage from './pages/Schedulepages'; 
 
 const client = new ApolloClient({
   uri: 'https://flyby-router-demo.herokuapp.com/',
@@ -36,6 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="/" element={<App />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/schedule" element={<SchedulePage />} />
         </Routes>
       </Router>
     </ApolloProvider>

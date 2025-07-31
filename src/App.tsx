@@ -9,6 +9,7 @@ import Structure from "./Components/structure/structure";
 import Rules from "./Components/rules/rules";
 import Slideshow from "./Components/Slideshow-spark/slideshow";
 import Footer from "./Components/footer/footer";
+import Contact from "./Components/contact/contact";
 // import Contact from "./Components/contact/contact"; // You would add a contact component
 
 const App: React.FC = () => {
@@ -66,6 +67,9 @@ const App: React.FC = () => {
         
         <section id="rules_page">
           <Rules />
+        </section>
+        <section id="contact ">
+          <Contact/>
         </section>
       </main>
       
