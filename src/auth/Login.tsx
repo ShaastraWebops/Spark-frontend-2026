@@ -1,52 +1,63 @@
-import './login.css';
-const Login = () => {
-  return (
-    <div className="bg-blue-900 w-screen font-serif h-screen flex items-center justify-center flex-col">
-      <div className="bg-blue-600 animate w-1/2 min-w-80 p-10 text-center text-white rounded-lg">
-        <h1 className=" text-center text-3xl p-2 font-bold font-serif">
-          Login to your account
-        </h1>
+import './login-signup.css';
+import { useEffect } from 'react';
 
-        <div className="mt-8">
-          <form>
-            <div className="flex flex-col text-start text-xl">
-              <label htmlFor="email">Email *</label>
-              <input
-                type="email"
-                id="email"
-                className="h-12 rounded-2xl p-4 my-4 text-black outline-none"
-                placeholder="Enter email"
-              />
-            </div>
-            <div className="flex flex-col text-start text-xl">
-              <label htmlFor="password">Password *</label>
-              <input
-                type="password"
-                id="password"
-                className="h-12 rounded-2xl p-4 my-4 text-black outline-none"
-                placeholder="Enter password"
-              />
-            </div>
-            <div>
-              <a>
-                <button className="underline " type="button">
-                  Forgot Password
-                </button>
-              </a>
-            </div>
-            <button
-              type="submit"
-              className="bg-blue-950 px-6 hover:scale-105 py-2 my-4 rounded-lg drop-shadow-2xl text-2xl"
-            >
-              Login
-            </button>
-          </form>
-          <p>
-            New here? <a className="underline text-lg">Create Account</a>
-          </p>
+const Login = () => {
+
+  useEffect(() => {
+    document.title = "Login";
+  }, []);
+
+  return (
+    <>
+      <div className='loginSignupParent'>
+        <div className='formContainer'>
+          <h1 className='text-4xl font-bold'>Log in</h1>
+          <div>
+            <form>
+              <div className="fieldsCont my-5">
+                <label htmlFor="email">Email <span className='text-red-500'>*</span></label>
+                <input
+                  type="email"
+                  id="email"
+                  className="inputs"
+                  placeholder="Enter email"
+                />
+              </div>
+              <div className="fieldsCont my-5">
+                <label htmlFor="password">Password <span className='text-red-500'>*</span></label>
+                <input
+                  type="password"
+                  id="password"
+                  className="inputs"
+                  placeholder="Enter password"
+                />
+              </div>
+              <div className='my-2'>
+                <a>
+                  <button className="underline" type="button">
+                    Forgot Password
+                  </button>
+                </a>
+              </div>
+              <div className='my-2'>
+                <span className='text-gray-500'>Don't have an account? </span>
+                <a href='/signup'>
+                  <button className="underline" type="button">
+                    Create One
+                  </button>
+                </a>
+              </div>
+              <button
+                type="submit"
+                className="bg-amber-600 px-6 hover:scale-105 duration-150 ease-in-out py-2 my-4 rounded-lg drop-shadow-2xl text-2xl text-white"
+              >
+                Login
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

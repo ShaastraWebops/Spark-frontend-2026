@@ -1,33 +1,40 @@
-import { useState } from "react";
-import './signup.css';
+import { useState, useEffect } from "react";
+import './login-signup.css';
 
+// Error types
 type Errors = {
   firstName?: string;
   lastName?: string;
   class?: string;
+  rollNumber?: string;
   school?: string;
   city?: string;
   sparkCity?: string;
-  pinCode?: string;
-  schoolAddress?: string;
   email?: string;
   mobile?: string;
+  heardSpark?: string;
   password?: string;
   confirmPassword?: string;
 };
 
+// Signup component
 const Signup = () => {
+
+  useEffect(() => {
+    document.title = "Signup";
+  }, []);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     class: "",
+    rollNumber: "",
     school: "",
     city: "",
     sparkCity: "",
-    pinCode: "",
-    schoolAddress: "",
     email: "",
     mobile: "",
+    heardSpark: "",
     password: "",
     confirmPassword: "",
   });
@@ -47,13 +54,14 @@ const Signup = () => {
     });
   };
 
+  // Validation of each field and setting errors accordingly
   const validateFields = () => {
     const newErrors: Errors = {};
 
     const firstNamePattern = /^[a-zA-Z\s]+$/;
     const mobilePattern = /^\d{10}$/;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const pincodePattern = /^\d{6}$/;
+    // const pincodePattern = /^\d{6}$/;
 
     if (!formData.firstName) newErrors.firstName = "First name is required";
     else if (!firstNamePattern.test(formData.firstName))
@@ -75,12 +83,9 @@ const Signup = () => {
 
     if (!formData.sparkCity) newErrors.sparkCity = "Spark City is required";
 
-    if (!formData.pinCode) newErrors.pinCode = "Pin code is required";
-    else if (!pincodePattern.test(formData.pinCode))
-      newErrors.pinCode = "Pin code should contain only digits";
-
-    if (!formData.schoolAddress)
-      newErrors.schoolAddress = "School address is required";
+    if (!formData.rollNumber) newErrors.rollNumber = "Roll number is required";
+    
+    if (!formData.heardSpark) newErrors.heardSpark = "Please answer this question";
 
     if (!formData.email) newErrors.email = "Email is required";
     else if (!emailPattern.test(formData.email))
@@ -102,224 +107,280 @@ const Signup = () => {
     return newErrors;
   };
 
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setHasTriedSubmit(true);
     const newErrors = validateFields();
     setErrors(newErrors);
+    console.log(newErrors, formData);
     if (Object.keys(newErrors).length === 0) {
       // Handle form submission
     }
   };
 
   return (
-    <div className="bg-blue-950 w-screen h-full font-serif text-white flex flex-col items-center">
-      <form className="w-2/5" onSubmit={handleSubmit}>
-        <h2 className="text-center font-bold text-2xl mt-8">Signup</h2>
-        <div className="flex flex-row bg-blue-800 m-8 p-2 w-[650px] rounded-3xl">
-          <div>
-            <label className="label" htmlFor="firstName">
-              First Name:
-              <input
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                required
-              />
-              {errors.firstName && hasTriedSubmit && (
-                <span className="errors-text">{errors.firstName}</span>
-              )}
-            </label>
+    <>
+      <div className="loginSignupParent">
+        <div className="formContainer">
+          <h2 className="text-4xl font-bold">Signup</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="grid sm:grid-cols-2 grid-cols-1 gap-x-10">
+              <div className="fieldsCont">
+                <label htmlFor="firstName">
+                  First Name <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="John"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                  className="inputs"
+                />
+                {errors.firstName && hasTriedSubmit && (
+                  <span className="errors-text">{errors.firstName}</span>
+                )}
+              </div>
 
-            <label className="label" htmlFor="lastName">
-              Last Name:
-              <input
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                required
-              />
-              {errors.lastName && hasTriedSubmit && (
-                <span className="errors-text">{errors.lastName}</span>
-              )}
-            </label>
+              <div className="fieldsCont">
+                <label htmlFor="lastName">
+                  Last Name <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Doe"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                  className="inputs"
+                />
+                {errors.lastName && hasTriedSubmit && (
+                  <span className="errors-text">{errors.lastName}</span>
+                )}
+              </div>
 
-            <label className="label" htmlFor="class">
-              Class:
-              <select
-                name="class"
-                value={formData.class}
-                onChange={handleChange}
-                required
-              >
-                <option className="none" value=""></option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
-              {errors.class && hasTriedSubmit && (
-                <span className="errors-text">{errors.class}</span>
-              )}
-            </label>
+              <div className="fieldsCont">
+                <label htmlFor="class">
+                  Class <span className='text-red-500'>*</span>
+                </label>
+                <select
+                  name="class"
+                  value={formData.class}
+                  onChange={handleChange}
+                  required
+                  className="inputs"
+                >
+                  <option value="" selected disabled hidden>Select your Class</option>
+                  <option className="none" value=""></option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+                {errors.class && hasTriedSubmit && (
+                  <span className="errors-text">{errors.class}</span>
+                )}
+              </div>
 
-            <label className="label" htmlFor="school">
-              School:
-              <input
-                type="text"
-                name="school"
-                value={formData.school}
-                onChange={handleChange}
-                required
-              />
-              {errors.school && hasTriedSubmit && (
-                <span className="errors-text">{errors.school}</span>
-              )}
-            </label>
+              <div className="fieldsCont">
+                <label htmlFor="rollNumber">
+                  Roll Number <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type="text"
+                  name="rollNumber"
+                  placeholder="Enter your roll number"
+                  value={formData.rollNumber}
+                  onChange={handleChange}
+                  required
+                  className="inputs"
+                />
+                {errors.rollNumber && hasTriedSubmit && (
+                  <span className="errors-text">{errors.rollNumber}</span>
+                )}
+              </div>
 
-            <label className="label" htmlFor="city">
-              City:
-              <input
-                type="text"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-                required
-              />
-              {errors.city && hasTriedSubmit && (
-                <span className="errors-text">{errors.city}</span>
-              )}
-            </label>
-            <label className="label" htmlFor="sparkCity">
-              Spark City:
-              <select
-                name="sparkCity"
-                value={formData.sparkCity}
-                onChange={handleChange}
-                required
-              >
-                <option className="none" value=""></option>
-                <option value="Alappuzha">Alappuzha</option>
-                <option value="Ariyalur">Ariyalur</option>
-                <option value="Bangalore">Bangalore</option>
-                <option value="Chennai">Chennai</option>
-                <option value="Cuddalore">Cuddalore</option>
-                <option value="Erode">Erode</option>
-                <option value="Guntur">Guntur</option>
-                <option value="Hyderabad">Hyderabad</option>
-                <option value="Kanchipuram">Kanchipuram</option>
-                <option value="Karur">Karur</option>
-                <option value="Kochi">Kochi</option>
-                <option value="Madurai">Madurai</option>
-                <option value="Nellore">Nellore</option>
-                <option value="Pondicherry">Pondicherry</option>
-                <option value="Salem">Salem</option>
-                <option value="Thanjavur">Thanjavur</option>
-                <option value="Tirunelveli">Tirunelveli</option>
-                <option value="Tirupati">Tirupati</option>
-                <option value="Trivandrum">Trivandrum</option>
-                <option value="Vellore">Vellore</option>
-              </select>
-              {errors.sparkCity && hasTriedSubmit && (
-                <span className="errors-text">{errors.sparkCity}</span>
-              )}
-            </label>
-          </div>
-          <div>
-            <label className="label" htmlFor="pinCode">
-              Pin Code:
-              <input
-                type="text"
-                name="pinCode"
-                value={formData.pinCode}
-                onChange={handleChange}
-                required
-              />
-              {errors.pinCode && hasTriedSubmit && (
-                <span className="errors-text">{errors.pinCode}</span>
-              )}
-            </label>
+              <div className="fieldsCont">
+                <label htmlFor="school">
+                  School <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type="text"
+                  name="school"
+                  placeholder="Enter your school name"
+                  value={formData.school}
+                  onChange={handleChange}
+                  required
+                  className="inputs"
+                />
+                {errors.school && hasTriedSubmit && (
+                  <span className="errors-text">{errors.school}</span>
+                )}
+              </div>
 
-            <label className="label" htmlFor="schoolAddress">
-              School Address:
-              <input
-                type="text"
-                name="schoolAddress"
-                value={formData.schoolAddress}
-                onChange={handleChange}
-              />
-              {errors.schoolAddress && hasTriedSubmit && (
-                <span className="errors-text">{errors.schoolAddress}</span>
-              )}
-            </label>
+              <div className="fieldsCont">
+                <label htmlFor="city">
+                  City <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type="text"
+                  name="city"
+                  placeholder="Enter your city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  required
+                  className="inputs"
+                />
+                {errors.city && hasTriedSubmit && (
+                  <span className="errors-text">{errors.city}</span>
+                )}
+              </div>
 
-            <label className="label" htmlFor="email">
-              Email:
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-              {errors.email && hasTriedSubmit && (
-                <span className="errors-text">{errors.email}</span>
-              )}
-            </label>
+              <div className="fieldsCont">
+                <label htmlFor="sparkCity">
+                  Spark City <span className='text-red-500'>*</span>
+                </label>
+                <select
+                  name="sparkCity"
+                  value={formData.sparkCity}
+                  onChange={handleChange}
+                  required
+                  className="inputs"
+                >
+                  <option value="" selected disabled hidden>Select Spark City</option>
+                  <option className="none" value=""></option>
+                  <option value="Alappuzha">Alappuzha</option>
+                  <option value="Bangalore">Bangalore</option>
+                  <option value="Chennai">Chennai</option>
+                  <option value="Coimbatore">Coimbatore</option>
+                  <option value="Guntur">Guntur</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                  <option value="Kanchipuram">Kanchipuram</option>
+                  <option value="Kochi">Kochi</option>
+                  <option value="Madurai">Madurai</option>
+                  <option value="Mangalore">Mangalore</option>
+                  <option value="Mysore">Mysore</option>
+                  <option value="Nellore">Nellore</option>
+                  <option value="Pondicherry">Pondicherry</option>
+                  <option value="Salem">Salem</option>
+                  <option value="Thanjavur">Thanjavur</option>
+                  <option value="Tirunelveli">Tirunelveli</option>
+                  <option value="Tirupati">Tirupati</option>
+                  <option value="Tiruppur">Tiruppur</option>
+                  <option value="Trivandrum">Trivandrum</option>
+                  <option value="Vellore">Vellore</option>
+                  <option value="Warangal">Warangal</option>
+                </select>
+                {errors.sparkCity && hasTriedSubmit && (
+                  <span className="errors-text">{errors.sparkCity}</span>
+                )}
+              </div>
 
-            <label className="label" htmlFor="mobile">
-              Mobile Number:
-              <input
-                type="tel"
-                name="mobile"
-                value={formData.mobile}
-                onChange={handleChange}
-                required
-              />
-              {errors.mobile && hasTriedSubmit && (
-                <span className="errors-text">{errors.mobile}</span>
-              )}
-            </label>
+              <div className="fieldsCont">
+                <label htmlFor="email">
+                  Email <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="inputs"
+                />
+                {errors.email && hasTriedSubmit && (
+                  <span className="errors-text">{errors.email}</span>
+                )}
+              </div>
 
-            <label className="label" htmlFor="password">
-              Create Password:
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-              {errors.password && hasTriedSubmit && (
-                <span className="errors-text">{errors.password}</span>
-              )}
-            </label>
+              <div className="fieldsCont">
+                <label htmlFor="mobile">
+                  Mobile Number <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type="tel"
+                  name="mobile"
+                  placeholder="Enter your mobile number"
+                  value={formData.mobile}
+                  onChange={handleChange}
+                  required
+                  className="inputs"
+                />
+                {errors.mobile && hasTriedSubmit && (
+                  <span className="errors-text">{errors.mobile}</span>
+                )}
+              </div>
 
-            <label className="label" htmlFor="confirmPassword">
-              Confirm Password:
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-              {errors.confirmPassword && hasTriedSubmit && (
-                <span className="errors-text">{errors.confirmPassword}</span>
-              )}
-            </label>
-          </div>
+              <div className="fieldsCont">
+                <label htmlFor="heardSpark">
+                  Have you heard of <br />Spark or Shaastra before? <span className='text-red-500'>*</span>
+                </label>
+                <div className="flex items-center justify-evenly">
+                  <div className="flex gap-2">
+                    <input type="radio" name="heardSpark" id="yes" value={"yes"}/>
+                    <label htmlFor="yes">Yes</label>
+                  </div>
+                  <div className="flex gap-2">
+                    <input type="radio" name="heardSpark" id="no" value={"no"}/>
+                    <label htmlFor="no">No</label>
+                  </div>
+                </div>
+                {errors.heardSpark && hasTriedSubmit && (
+                  <span className="errors-text">{errors.heardSpark}</span>
+                )}
+              </div>
+
+
+              <div className="fieldsCont">
+                <label htmlFor="password">
+                  Create Password <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Create a password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  className="inputs"
+                />
+                {errors.password && hasTriedSubmit && (
+                  <span className="errors-text">{errors.password}</span>
+                )}
+              </div>
+
+              <div className="fieldsCont">
+                <label htmlFor="confirmPassword">
+                  Confirm Password <span className='text-red-500'>*</span>
+                </label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm your password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                  className="inputs"
+                />
+                {errors.confirmPassword && hasTriedSubmit && (
+                  <span className="errors-text">{errors.confirmPassword}</span>
+                )}
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="bg-amber-600 px-6 hover:scale-105 duration-150 ease-in-out py-2 my-4 rounded-lg drop-shadow-2xl text-2xl text-white"
+            >
+              Create Account
+            </button>
+          </form>
         </div>
-        <button
-          type="submit"
-          className="bg-blue-950 my-5 h-10 rounded-md text-lg font-semibold"
-        >
-          Create Account
-        </button>
-      </form>
-    </div>
+      </div>
+    </>
   );
 };
 
