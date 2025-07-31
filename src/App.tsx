@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import logo1 from './assets/ShaastraLogoWhite.png';
-import './App.css';
-import Home from './Components/home/home';
-import About from './Components/about/about';
-import Structure from './Components/structure/structure';
-import Rules from './Components/rules/rules';
-// import Login from './auth/Login';
-// import Signup from './auth/Signup';
-import Slideshow from './Components/Slideshow-spark/slideshow';
+// src/App.tsx
+
+import React, { useEffect, useState } from "react";
+// Components
+import Navbar from "./Components/navbar/navbar"; // <-- Import the new Navbar
+import Home from "./Components/home/home";
+import About from "./Components/about/about";
+import Structure from "./Components/structure/structure";
+import Rules from "./Components/rules/rules";
+import Slideshow from "./Components/Slideshow-spark/slideshow";
+import Footer from "./Components/footer/footer";
+// import Contact from "./Components/contact/contact"; // You would add a contact component
+
 const App: React.FC = () => {
+  // State for controlling navbar visibility is kept here
   const [showNavbar, setShowNavbar] = useState<boolean>(true);
   const [lastScrollY, setLastScrollY] = useState<number>(0);
 
+  // This function controls elements on the page, so it stays in App.tsx
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
+  // This effect controls page-level scroll behavior
   const controlNavbar = () => {
-    if (window.scrollY > lastScrollY) {
+    if (window.scrollY > lastScrollY && window.scrollY > 100) {
       setShowNavbar(false);
     } else {
       setShowNavbar(true);
@@ -29,42 +35,45 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', controlNavbar);
+    window.addEventListener("scroll", controlNavbar);
     return () => {
-      window.removeEventListener('scroll', controlNavbar);
+      window.removeEventListener("scroll", controlNavbar);
     };
   }, [lastScrollY]);
 
   return (
-    <div className="App">
-      <nav className={`floating-navbar ${showNavbar ? "" : "collapsed"}`}>
-        <div className="logo">
-          <a href="#"><img src={logo1} alt="Shaastra Logo" /></a>
-        </div>
-        <ul className="nav-links">
-          <li><a href="#" onClick={() => scrollToSection('floating-container')}>Home</a></li>
-          <li><a href="#" onClick={() => scrollToSection('about')}>About</a></li>
-          <li><a href="#" onClick={() => scrollToSection('structure')}>Structures</a></li>
-          <li><a href="#" onClick={() => scrollToSection('rules_page')}>Rules</a></li>  
-          <li><a href="/signup" target="_blank" rel="noopener noreferrer">Signup</a></li>
-          <li><a href="/login" target="_blank" rel="noopener noreferrer">Login</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-        <button></button>
-    </nav>
-    <div className="floating-container" id='floating-container'>
-    <Home/>
-  </div>
-  <div className='slideshow' id='slideshow'><Slideshow/></div>
-  <div className='about about_main' id='about'><About/></div>
+    // Base styles for the entire app
+    <div className="bg-slate-900">
+      <Navbar showNavbar={showNavbar} scrollToSection={scrollToSection} />
 
-            <div className='structure' id='structure'><Structure/></div>
+      <main>
+        {/* Each section now has a simple div wrapper with an ID for scrolling */}
+        <section id="home">
+          <Home />
+        </section>
         
-           <div className='rules_page' id="rules_page"><Rules/></div>
-            <div className='hi'></div>
-            <div className='hi'></div>
+        <section id="slideshow">
+          <Slideshow />
+        </section>
 
-      </div>
+        <section id="about">
+          <About />
+        </section>
+        
+        <section id="structure">
+          <Structure />
+        </section>
+        
+        <section id="rules_page">
+          <Rules />
+        </section>
+      </main>
+      
+      {/* The existing styled footer */}
+      <footer className="w-full flex items-center justify-center h-auto  bg-gray-800 text-white">
+        <Footer />
+      </footer>
+    </div>
   );
 };
 

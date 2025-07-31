@@ -1,6 +1,8 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
+@import "tailwindcss";
+
 
 .label {
   @apply p-4 text-lg flex flex-col min-w-80;

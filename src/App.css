@@ -1,7 +1,7 @@
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #05161D, #052c4c);
-  padding-top: 80px; 
+  background: linear-gradient(to bottom, #05161D, #033566);
+  /* padding-top: 80px;  */
 }
 
 .floating-navbar {
@@ -16,7 +16,7 @@ body {
   padding: 10px 20px;
   box-shadow: 0 2px 4px rgba(196, 192, 192, 0.2);
   z-index: 1000;
-  background-color: rgb(249, 102, 52); /* Navbar background color */
+  background-color: rgb(52, 82, 249); /* Navbar background color */
   transition: height 0.2s ease, padding 0.2s ease; /* Smooth collapse and expand */
 }
 
@@ -99,9 +99,12 @@ img{
   height: max-content;
   width: 100%;
 }
-.slideshow{
-  margin-left: 100px;
+/* App.css - AFTER */
+.slideshow {
+  width: 100%; /* Ensure the container itself is full-width */
+  padding-left: 100px; /* Indent the content inside the container */
   margin-top: 220px;
+  box-sizing: border-box; /* Prevents padding from making the div wider than 100% */
 }
 .rules_page{
   margin-top: 100px;
