@@ -1,5 +1,4 @@
 import React from "react";
-import "./about.css";
 import about from "../../assets/2.jpg";
 import { useScrollTriggerAnimation } from "../../useScrollTriggerAnimation";
 
