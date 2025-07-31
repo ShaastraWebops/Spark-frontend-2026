@@ -1,4 +1,4 @@
-body {
+.App {
   font-family: Arial, sans-serif;
   background: linear-gradient(to bottom, #05161D, #033566);
   /* padding-top: 80px;  */
@@ -128,7 +128,7 @@ img{
     margin-left: 0px;
   }
   
-  body{
+  .App{
     background: linear-gradient(to bottom, #05161D, #05161D);
   }
   .hi1{
@@ -160,6 +160,4 @@ img{
   nav.floating-navbar .nav-links{
     display: none;
   }
-  
-
 }
