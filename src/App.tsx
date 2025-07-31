@@ -45,26 +45,26 @@ const App: React.FC = () => {
           <li><a href="#" onClick={() => scrollToSection('floating-container')}>Home</a></li>
           <li><a href="#" onClick={() => scrollToSection('about')}>About</a></li>
           <li><a href="#" onClick={() => scrollToSection('structure')}>Structures</a></li>
-          <li><a href="#" onClick={() => scrollToSection('rules_page')}>Rules</a></li>  
+          <li><a href="#" onClick={() => scrollToSection('rules_page')}>Rules</a></li>
           <li><a href="/signup" target="_blank" rel="noopener noreferrer">Signup</a></li>
           <li><a href="/login" target="_blank" rel="noopener noreferrer">Login</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
         <button></button>
-    </nav>
-    <div className="floating-container" id='floating-container'>
-    <Home/>
-  </div>
-  <div className='slideshow' id='slideshow'><Slideshow/></div>
-  <div className='about about_main' id='about'><About/></div>
-
-            <div className='structure' id='structure'><Structure/></div>
-        
-           <div className='rules_page' id="rules_page"><Rules/></div>
-            <div className='hi'></div>
-            <div className='hi'></div>
-
+      </nav>
+      <div className="floating-container" id='floating-container'>
+        <Home />
       </div>
+      <div className='slideshow' id='slideshow'><Slideshow /></div>
+      <div className='about about_main' id='about'><About /></div>
+
+      <div className='structure' id='structure'><Structure /></div>
+
+      <div className='rules_page' id="rules_page"><Rules /></div>
+      {/* <div className='hi'></div>
+      <div className='hi'></div> */}
+
+    </div>
   );
 };
 
