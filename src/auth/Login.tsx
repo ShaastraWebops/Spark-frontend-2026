@@ -6,7 +6,7 @@ import Footer from '../Components/footer/footer';
 const Login = () => {
 
   useEffect(() => {
-    document.title = "Login";
+    document.title = "Login | Spark";
   }, []);
 
   return (

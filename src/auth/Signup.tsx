@@ -23,7 +23,7 @@ type Errors = {
 const Signup = () => {
 
   useEffect(() => {
-    document.title = "Signup";
+    document.title = "Signup | Spark";
   }, []);
 
   const [formData, setFormData] = useState({
@@ -325,11 +325,11 @@ const Signup = () => {
                 </label>
                 <div className="flex items-center justify-evenly">
                   <div className="flex gap-2">
-                    <input type="radio" name="heardSpark" id="yes" value={"yes"} className="hover:cursor-pointer" />
+                    <input type="radio" name="heardSpark" id="yes" value={"yes"} onChange={handleChange} className="hover:cursor-pointer" />
                     <label htmlFor="yes">Yes</label>
                   </div>
                   <div className="flex gap-2">
-                    <input type="radio" name="heardSpark" id="no" value={"no"} className="hover:cursor-pointer" />
+                    <input type="radio" name="heardSpark" id="no" value={"no"} onChange={handleChange} className="hover:cursor-pointer" />
                     <label htmlFor="no">No</label>
                   </div>
                 </div>
