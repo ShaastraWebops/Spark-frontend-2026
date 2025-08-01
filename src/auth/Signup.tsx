@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import Navbar from '../Components/navbar/navbar'
+import Footer from '../Components/footer/footer';
 import './login-signup.css';
 
 // Error types
@@ -84,7 +86,7 @@ const Signup = () => {
     if (!formData.sparkCity) newErrors.sparkCity = "Spark City is required";
 
     if (!formData.rollNumber) newErrors.rollNumber = "Roll number is required";
-    
+
     if (!formData.heardSpark) newErrors.heardSpark = "Please answer this question";
 
     if (!formData.email) newErrors.email = "Email is required";
@@ -121,9 +123,11 @@ const Signup = () => {
 
   return (
     <>
-      <div className="loginSignupParent">
+      <Navbar showNavbar={true} scrollToSection={() => { }} />
+
+      <div className="loginSignupParent mt-10">
         <div className="formContainer">
-          <h2 className="text-4xl font-bold">Signup</h2>
+          <h2 className="pageHeading">Signup</h2>
           <form onSubmit={handleSubmit}>
             <div className="grid sm:grid-cols-2 grid-cols-1 gap-x-10">
               <div className="fieldsCont">
@@ -321,11 +325,11 @@ const Signup = () => {
                 </label>
                 <div className="flex items-center justify-evenly">
                   <div className="flex gap-2">
-                    <input type="radio" name="heardSpark" id="yes" value={"yes"}/>
+                    <input type="radio" name="heardSpark" id="yes" value={"yes"} className="hover:cursor-pointer" />
                     <label htmlFor="yes">Yes</label>
                   </div>
                   <div className="flex gap-2">
-                    <input type="radio" name="heardSpark" id="no" value={"no"}/>
+                    <input type="radio" name="heardSpark" id="no" value={"no"} className="hover:cursor-pointer" />
                     <label htmlFor="no">No</label>
                   </div>
                 </div>
@@ -373,13 +377,18 @@ const Signup = () => {
             </div>
             <button
               type="submit"
-              className="bg-amber-600 px-6 hover:scale-105 duration-150 ease-in-out py-2 my-4 rounded-lg drop-shadow-2xl text-2xl text-white"
+              className="formButton"
             >
               Create Account
             </button>
           </form>
         </div>
       </div>
+
+      {/* Footer component */}
+      <footer className="w-full flex items-center justify-center h-auto  bg-gray-800 text-white">
+        <Footer />
+      </footer>
     </>
   );
 };

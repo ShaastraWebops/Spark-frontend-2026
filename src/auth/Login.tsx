@@ -1,5 +1,7 @@
 import './login-signup.css';
 import { useEffect } from 'react';
+import Navbar from '../Components/navbar/navbar'
+import Footer from '../Components/footer/footer';
 
 const Login = () => {
 
@@ -9,9 +11,12 @@ const Login = () => {
 
   return (
     <>
+      <Navbar showNavbar={true} scrollToSection={() => { }} />
+
+      {/* Login Form */}
       <div className='loginSignupParent'>
         <div className='formContainer'>
-          <h1 className='text-4xl font-bold'>Log in</h1>
+          <h1 className='pageHeading'>Log in</h1>
           <div>
             <form>
               <div className="fieldsCont my-5">
@@ -33,23 +38,23 @@ const Login = () => {
                 />
               </div>
               <div className='my-2'>
-                <a>
-                  <button className="underline" type="button">
+                <button className="underline" type="button">
+                  <a href='#'>
                     Forgot Password
-                  </button>
-                </a>
+                  </a>
+                </button>
               </div>
               <div className='my-2'>
                 <span className='text-gray-500'>Don't have an account? </span>
-                <a href='/signup'>
-                  <button className="underline" type="button">
+                <button className="underline" type="button">
+                  <a href='/signup'>
                     Create One
-                  </button>
-                </a>
+                  </a>
+                </button>
               </div>
               <button
                 type="submit"
-                className="bg-amber-600 px-6 hover:scale-105 duration-150 ease-in-out py-2 my-4 rounded-lg drop-shadow-2xl text-2xl text-white"
+                className="formButton"
               >
                 Login
               </button>
@@ -57,6 +62,11 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+      {/* Footer Component */}
+      <footer className="w-full flex items-center justify-center h-auto  bg-gray-800 text-white">
+        <Footer />
+      </footer>
     </>
   );
 };
