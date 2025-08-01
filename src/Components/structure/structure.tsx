@@ -33,7 +33,8 @@ const Structure: React.FC = () => {
           <li>It is a quiz to test the student's Aptitude, Logical and Mathematical Reasoning skills and happens in over 20+ cities nationwide.</li>
           <li>The top 10 participants from each city would qualify for Spark Round 2 and stand a chance to compete with students from different cities and backgrounds.</li>
         </ul>
-        <button className="mt-6 inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-800 transition-colors">
+        <button className="cursor-pointer mt-6 inline-block rounded-lg px-5 py-3 text-sm font-medium text-white 
+       bg-linear-to-r from-blue-500 to-blue-400 hover:from-blue-400 hover:to-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-800 transition-colors">
           Attempt Mock Quiz
         </button>
       </div>
