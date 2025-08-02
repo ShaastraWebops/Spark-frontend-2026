@@ -1,7 +1,6 @@
 import './login-signup.css';
 import { useEffect } from 'react';
 import Navbar from '../Components/navbar/navbar'
-import Footer from '../Components/footer/footer';
 
 const Login = () => {
 

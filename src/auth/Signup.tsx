@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Navbar from '../Components/navbar/navbar'
-import Footer from '../Components/footer/footer';
 import './login-signup.css';
 
 // Error types
