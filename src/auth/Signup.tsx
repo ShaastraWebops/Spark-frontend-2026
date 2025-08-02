@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Navbar from '../Components/navbar/navbar'
-import './login-signup.css';
+import Navbar from "../Components/navbar/navbar";
+import "./login-signup.css";
 
 // Error types
 type Errors = {
@@ -20,7 +20,6 @@ type Errors = {
 
 // Signup component
 const Signup = () => {
-
   useEffect(() => {
     document.title = "Signup | Spark";
   }, []);
@@ -86,7 +85,8 @@ const Signup = () => {
 
     if (!formData.rollNumber) newErrors.rollNumber = "Roll number is required";
 
-    if (!formData.heardSpark) newErrors.heardSpark = "Please answer this question";
+    if (!formData.heardSpark)
+      newErrors.heardSpark = "Please answer this question";
 
     if (!formData.email) newErrors.email = "Email is required";
     else if (!emailPattern.test(formData.email))
@@ -122,16 +122,16 @@ const Signup = () => {
 
   return (
     <>
-      <Navbar showNavbar={true} scrollToSection={() => { }} />
+      {/* <Navbar showNavbar={false} scrollToSection={() => {}} /> */}
 
-      <div className="loginSignupParent mt-10">
+      <div className="loginSignupParent">
         <div className="formContainer">
-          <h2 className="pageHeading">Signup</h2>
+          <h2 className="pageHeading text-center">Signup</h2>
           <form onSubmit={handleSubmit}>
             <div className="grid sm:grid-cols-2 grid-cols-1 gap-x-10">
               <div className="fieldsCont">
                 <label htmlFor="firstName">
-                  First Name <span className='text-red-500'>*</span>
+                  First Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -149,7 +149,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="lastName">
-                  Last Name <span className='text-red-500'>*</span>
+                  Last Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -167,7 +167,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="class">
-                  Class <span className='text-red-500'>*</span>
+                  Class <span className="text-red-500">*</span>
                 </label>
                 <select
                   name="class"
@@ -176,7 +176,9 @@ const Signup = () => {
                   required
                   className="inputs"
                 >
-                  <option value="" selected disabled hidden>Select your Class</option>
+                  <option value="" selected disabled hidden>
+                    Select your Class
+                  </option>
                   <option className="none" value=""></option>
                   <option value="7">7</option>
                   <option value="8">8</option>
@@ -190,7 +192,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="rollNumber">
-                  Roll Number <span className='text-red-500'>*</span>
+                  Roll Number <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -208,7 +210,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="school">
-                  School <span className='text-red-500'>*</span>
+                  School <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -226,7 +228,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="city">
-                  City <span className='text-red-500'>*</span>
+                  City <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -244,7 +246,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="sparkCity">
-                  Spark City <span className='text-red-500'>*</span>
+                  Spark City <span className="text-red-500">*</span>
                 </label>
                 <select
                   name="sparkCity"
@@ -253,7 +255,9 @@ const Signup = () => {
                   required
                   className="inputs"
                 >
-                  <option value="" selected disabled hidden>Select Spark City</option>
+                  <option value="" selected disabled hidden>
+                    Select Spark City
+                  </option>
                   <option className="none" value=""></option>
                   <option value="Alappuzha">Alappuzha</option>
                   <option value="Bangalore">Bangalore</option>
@@ -284,7 +288,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="email">
-                  Email <span className='text-red-500'>*</span>
+                  Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
@@ -302,7 +306,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="mobile">
-                  Mobile Number <span className='text-red-500'>*</span>
+                  Mobile Number <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="tel"
@@ -320,15 +324,31 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="heardSpark">
-                  Have you heard of <br />Spark or Shaastra before? <span className='text-red-500'>*</span>
+                  Have you heard of <br />
+                  Spark or Shaastra before?{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <div className="flex items-center justify-evenly">
                   <div className="flex gap-2">
-                    <input type="radio" name="heardSpark" id="yes" value={"yes"} onChange={handleChange} className="hover:cursor-pointer" />
+                    <input
+                      type="radio"
+                      name="heardSpark"
+                      id="yes"
+                      value={"yes"}
+                      onChange={handleChange}
+                      className="hover:cursor-pointer"
+                    />
                     <label htmlFor="yes">Yes</label>
                   </div>
                   <div className="flex gap-2">
-                    <input type="radio" name="heardSpark" id="no" value={"no"} onChange={handleChange} className="hover:cursor-pointer" />
+                    <input
+                      type="radio"
+                      name="heardSpark"
+                      id="no"
+                      value={"no"}
+                      onChange={handleChange}
+                      className="hover:cursor-pointer"
+                    />
                     <label htmlFor="no">No</label>
                   </div>
                 </div>
@@ -337,10 +357,9 @@ const Signup = () => {
                 )}
               </div>
 
-
               <div className="fieldsCont">
                 <label htmlFor="password">
-                  Create Password <span className='text-red-500'>*</span>
+                  Create Password <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="password"
@@ -358,7 +377,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="confirmPassword">
-                  Confirm Password <span className='text-red-500'>*</span>
+                  Confirm Password <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="password"
@@ -374,12 +393,11 @@ const Signup = () => {
                 )}
               </div>
             </div>
-            <button
-              type="submit"
-              className="formButton"
-            >
-              Create Account
-            </button>
+            <div className="flex justify-center mt-6">
+              <button type="submit" className="formButton">
+                Create Account
+              </button>
+            </div>
           </form>
         </div>
       </div>

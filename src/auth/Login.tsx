@@ -1,27 +1,27 @@
-import './login-signup.css';
-import { useEffect } from 'react';
-import Navbar from '../Components/navbar/navbar'
-import { Link } from 'react-router-dom';
-
+import "./login-signup.css";
+import { useEffect } from "react";
+import Navbar from "../Components/navbar/navbar";
+import { Link } from "react-router-dom";
 
 const Login = () => {
-
   useEffect(() => {
     document.title = "Login | Spark";
   }, []);
 
   return (
     <>
-      <Navbar showNavbar={true} scrollToSection={() => { }} />
+      <Navbar showNavbar={false} scrollToSection={() => {}} />
 
       {/* Login Form */}
-      <div className='loginSignupParent'>
-        <div className='formContainer'>
-          <h1 className='pageHeading'>Log in</h1>
+      <div className="loginSignupParent">
+        <div className="formContainer">
+          <h1 className="pageHeading text-center">Log in</h1>
           <div>
             <form>
               <div className="fieldsCont my-5">
-                <label htmlFor="email">Email <span className='text-red-500'>*</span></label>
+                <label htmlFor="email">
+                  Email <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="email"
                   id="email"
@@ -30,7 +30,9 @@ const Login = () => {
                 />
               </div>
               <div className="fieldsCont my-5">
-                <label htmlFor="password">Password <span className='text-red-500'>*</span></label>
+                <label htmlFor="password">
+                  Password <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="password"
                   id="password"
@@ -38,27 +40,26 @@ const Login = () => {
                   placeholder="Enter password"
                 />
               </div>
-              <div className='my-2'>
+
+              <div className="my-2 flex justify-center">
+                <span className="text-gray-500 ">Don't have an account? </span>
                 <button className="underline" type="button">
-                  <Link to='/forgot-password'>
-                    Forgot Password
-                  </Link>
+                  <Link to="/signup">Create One</Link>
                 </button>
               </div>
-              <div className='my-2'>
-                <span className='text-gray-500'>Don't have an account? </span>
+              <div className="my-2 flex justify-center">
                 <button className="underline" type="button">
-                  <Link to='/signup'>
-                    Create One
-                  </Link>
+                  <Link to="/otp-verification">Forgot Password</Link>
                 </button>
               </div>
-              <button
-                type="submit"
-                className="formButton"
-              >
-                Login
-              </button>
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className="formButton flex justify-center"
+                >
+                  Login
+                </button>
+              </div>
             </form>
           </div>
         </div>
