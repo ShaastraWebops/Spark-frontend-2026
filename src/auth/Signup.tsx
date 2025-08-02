@@ -384,11 +384,6 @@ const Signup = () => {
           </form>
         </div>
       </div>
-
-      {/* Footer component */}
-      <footer className="w-full flex items-center justify-center h-auto  bg-gray-800 text-white">
-        <Footer />
-      </footer>
     </>
   );
 };

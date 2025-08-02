@@ -13,7 +13,11 @@
 }
 
 .inputs {
-  @apply h-12 p-4 text-white outline-0 border border-b-white border-x-0 border-t-0 w-full max-w-xs flex items-center justify-center focus:border-b-blue-300 focus:scale-103 transition-all duration-300
+  @apply h-12 px-4 text-white outline-0 border border-b-white border-x-0 border-t-0 w-full max-w-xs flex items-center justify-center focus:border-b-blue-300 focus:scale-103 transition-all duration-300
+}
+
+.inputs option {
+  @apply text-black bg-white
 }
 
 .formContainer {

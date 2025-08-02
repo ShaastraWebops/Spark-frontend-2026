@@ -62,11 +62,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-
-      {/* Footer Component */}
-      <footer className="w-full flex items-center justify-center h-auto  bg-gray-800 text-white">
-        <Footer />
-      </footer>
     </>
   );
 };
