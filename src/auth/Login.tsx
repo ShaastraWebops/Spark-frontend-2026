@@ -1,7 +1,8 @@
 import './login-signup.css';
 import { useEffect } from 'react';
 import Navbar from '../Components/navbar/navbar'
-import Footer from '../Components/footer/footer';
+import { Link } from 'react-router-dom';
+
 
 const Login = () => {
 
@@ -39,17 +40,17 @@ const Login = () => {
               </div>
               <div className='my-2'>
                 <button className="underline" type="button">
-                  <a href='#'>
+                  <Link to='/forgot-password'>
                     Forgot Password
-                  </a>
+                  </Link>
                 </button>
               </div>
               <div className='my-2'>
                 <span className='text-gray-500'>Don't have an account? </span>
                 <button className="underline" type="button">
-                  <a href='/signup'>
+                  <Link to='/signup'>
                     Create One
-                  </a>
+                  </Link>
                 </button>
               </div>
               <button
