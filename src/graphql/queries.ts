@@ -12,8 +12,8 @@ export const GET_USER = gql`
 `;
 
 export const GET_ME = gql`
-  query GetMe($token: String!) {
-    getMe(token: $token) {
+  query GetMe {
+    getMe {
       firstName
       lastName
       email

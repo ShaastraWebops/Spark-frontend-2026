@@ -6,20 +6,20 @@ import Navbar from "../Components/navbar/navbar";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-
+  const { loading, error, data } = useQuery(GET_ME);
+//   console.log(data);
   useEffect(() => {
-    document.title = "Dashboard | Spark"; // kept your original title
-    if (!token) navigate("/login");
-  }, [token, navigate]);
+    document.title = "Dashboard | Spark";
 
-  const { loading, error, data } = useQuery(GET_ME, {
-    variables: { token },
-    skip: !token,
-  });
+    if (!loading && !data?.getMe) {
+      navigate("/login");
+    }
+  }, [loading, data, navigate]);
+
+//   console.log("Dashboard loaded");
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
     navigate("/login");
   };
 
@@ -36,7 +36,6 @@ const Dashboard = () => {
   const user = data?.getMe;
 
   return (
-    
     <div className="loginSignupParent flex justify-center items-start py-12 px-4 min-h-screen bg-white">
       <Navbar showNavbar={true} scrollToSection={() => {}} />
       <div className="formContainer w-full max-w-2xl">

@@ -4,6 +4,7 @@ import { LOGIN_USER } from "../graphql/mutations"; // update path if needed
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Components/navbar/navbar";
 import "./login-signup.css";
+import toast from "react-hot-toast";
 
 const Login = () => {
   useEffect(() => {
@@ -30,12 +31,12 @@ const Login = () => {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
-      alert("Please fill in all fields");
+      toast.error("Please fill in all fields");
       return;
     }
 
     try {
-      const res = await loginUser({
+      await loginUser({
         variables: {
           data: {
             email: formData.email,
@@ -44,18 +45,13 @@ const Login = () => {
         },
       });
 
-      const token = res.data.loginUser;
-      // console.log("Login successful, token:", token);
-
-      // optionally: save token to localStorage or cookie
-      localStorage.setItem("token", token);
-
-      alert("Login successful!");
-      navigate("/dashboard"); // or wherever you want
-
+      toast.success("Login successful!");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
     } catch (err: any) {
       console.error("Login failed:", err.message);
-      alert("Login failed. Please check your credentials.");
+      toast.error("Login failed. Please check your credentials.");
     }
   };
 

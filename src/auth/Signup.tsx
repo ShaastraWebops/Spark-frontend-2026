@@ -151,7 +151,7 @@ const Signup = () => {
 
         toast.success("Account created successfully! Redirecting...");
         setTimeout(() => {
-          navigate("/");
+          navigate("/dashboard");
         }, 2000);
       } catch (err: any) {
         console.error("Signup error:", err);

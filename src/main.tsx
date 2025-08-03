@@ -5,7 +5,6 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  gql,
 } from "@apollo/client";
 import App from "./App";
 import Login from "./auth/Login";
@@ -15,30 +14,14 @@ import SchedulePage from "./pages/Schedulepages";
 import Otp from "./auth/Otp";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./auth/Dashboard";
+import SetNewPassword from "./auth/SetNewPassword";
 
-// 'https://flyby-router-demo.herokuapp.com/' // for the demo
-
+const endpoint = import.meta.env.VITE_GRAPHQL_ENDPOINT;
 const client = new ApolloClient({
-  uri: "http://localhost:3000/graphql", // Update with your backend URL
+  uri: endpoint, // Update with your backend URL
   cache: new InMemoryCache(), // Use InMemoryCache for Apollo Client
   credentials: "include", // Include credentials for CORS
 });
-
-client
-  .query({
-    query: gql`
-      query GetLocations {
-        locations {
-          id
-          name
-          description
-          photo
-        }
-      }
-    `,
-  })
-  .then((result) => console.log(result))
-  .catch((error) => console.error(error));
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -52,6 +35,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/schedule" element={<SchedulePage />} />
           <Route path="/otp-verification" element={<Otp />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/set-password" element={<SetNewPassword />} />
           <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>
       </Router>

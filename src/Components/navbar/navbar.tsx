@@ -3,26 +3,45 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom"; // Import Link and useLocation
 import logo1 from "/src/assets/ShaastraLogoWhite.png"; // Make sure this path is correct
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_ME } from "../../graphql/queries"; // ensure it uses context, not token arg
+import { LOGOUT } from "../../graphql/mutations"; // Import the LOGOUT mutation
 
 // Define the types for the props this component will receive
 interface NavbarProps {
   showNavbar: boolean;
   scrollToSection: (id: string) => void;
 }
-
+type NavLink = {
+  id: string;
+  text: string;
+  type: "scroll" | "link";
+  path?: string;
+};
+// Updated navLinks array with the new Schedule page link
+const navLinks: NavLink[] = [
+  { id: "home", text: "Home", type: "scroll" },
+  { id: "about", text: "About", type: "scroll" },
+  { id: "structure", text: "Structure", type: "scroll" },
+  { id: "schedule", text: "Schedule", type: "link", path: "/schedule" }, // This is now a link
+  { id: "rules_page", text: "Rules", type: "scroll" },
+  { id: "contact", text: "Contact", type: "scroll" },
+];
 const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const location = useLocation(); // Get the current URL location
+  const { data, loading } = useQuery(GET_ME);
+  const isLoggedIn = !!data?.getMe;
+  const [logout] = useMutation(LOGOUT);
 
-  // Updated navLinks array with the new Schedule page link
-  const navLinks = [
-    { id: "home", text: "Home", type: "scroll" },
-    { id: "about", text: "About", type: "scroll" },
-    { id: "structure", text: "Structure", type: "scroll" },
-    { id: "schedule", text: "Schedule", type: "link", path: "/schedule" }, // This is now a link
-    { id: "rules_page", text: "Rules", type: "scroll" },
-    { id: "contact", text: "Contact", type: "scroll" },
-  ];
+  const handleLogout = async () => {
+    try {
+      await logout(); // Clear cookie from backend
+      window.location.href = "/login"; // Redirect
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
 
   const handleLinkClick = (id: string) => {
     // If we are not on the homepage, first navigate there, then scroll.
@@ -118,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
             <div className="hidden md:flex items-center space-x-4">
               {navLinks.map((link) => renderLink(link))}
 
-              {localStorage.getItem("token") ? (
+              {isLoggedIn ? (
                 <>
                   <a
                     href="/dashboard"
@@ -128,8 +147,7 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
                   </a>
                   <button
                     onClick={() => {
-                      localStorage.removeItem("token");
-                      window.location.href = "/login";
+                      handleLogout();
                     }}
                     className="text-gray-300 bg-gray-700 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
                   >
@@ -208,7 +226,7 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
             {navLinks.map((link) => renderLink(link, true))}
 
             <div className="pt-4 border-t border-gray-700 mt-4">
-              {localStorage.getItem("token") ? (
+              {isLoggedIn ? (
                 <>
                   <a
                     href="/dashboard"
