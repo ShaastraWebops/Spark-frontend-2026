@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import Navbar from "../Components/navbar/navbar";
+import { useMutation } from "@apollo/client";
+import { REGISTER_USER } from "../graphql/mutations"; // update path if needed
 import "./login-signup.css";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-// Error types
 type Errors = {
   firstName?: string;
   lastName?: string;
@@ -18,11 +20,12 @@ type Errors = {
   confirmPassword?: string;
 };
 
-// Signup component
 const Signup = () => {
   useEffect(() => {
     document.title = "Signup | Spark";
   }, []);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -38,9 +41,11 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
-  const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
+  const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
+
+  const [registerUser, { loading }] = useMutation(REGISTER_USER);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -54,43 +59,39 @@ const Signup = () => {
     });
   };
 
-  // Validation of each field and setting errors accordingly
   const validateFields = () => {
     const newErrors: Errors = {};
-
-    const firstNamePattern = /^[a-zA-Z\s]+$/;
+    const namePattern = /^[a-zA-Z\s]+$/;
     const mobilePattern = /^\d{10}$/;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // const pincodePattern = /^\d{6}$/;
 
     if (!formData.firstName) newErrors.firstName = "First name is required";
-    else if (!firstNamePattern.test(formData.firstName))
+    else if (!namePattern.test(formData.firstName))
       newErrors.firstName = "First name must contain only letters and spaces";
 
     if (!formData.lastName) newErrors.lastName = "Last name is required";
-    else if (!firstNamePattern.test(formData.lastName))
+    else if (!namePattern.test(formData.lastName))
       newErrors.lastName = "Last name must contain only letters and spaces";
 
     if (!formData.class) newErrors.class = "Class is required";
+    if (!formData.rollNumber) newErrors.rollNumber = "Roll number is required";
 
     if (!formData.school) newErrors.school = "School is required";
-    else if (!firstNamePattern.test(formData.school))
-      newErrors.school = "School name must contain only letters and spaces";
+    else if (!namePattern.test(formData.school))
+      newErrors.school = "School must contain only letters and spaces";
 
     if (!formData.city) newErrors.city = "City is required";
-    else if (!firstNamePattern.test(formData.city))
-      newErrors.city = "City name must contain only letters and spaces";
+    else if (!namePattern.test(formData.city))
+      newErrors.city = "City must contain only letters and spaces";
 
     if (!formData.sparkCity) newErrors.sparkCity = "Spark City is required";
-
-    if (!formData.rollNumber) newErrors.rollNumber = "Roll number is required";
 
     if (!formData.heardSpark)
       newErrors.heardSpark = "Please answer this question";
 
     if (!formData.email) newErrors.email = "Email is required";
     else if (!emailPattern.test(formData.email))
-      newErrors.email = "Email must be a valid email address";
+      newErrors.email = "Invalid email address";
 
     if (!formData.mobile) newErrors.mobile = "Mobile number is required";
     else if (!mobilePattern.test(formData.mobile))
@@ -98,25 +99,64 @@ const Signup = () => {
 
     if (!formData.password) newErrors.password = "Password is required";
     else if (formData.password.length < 8)
-      newErrors.password = "Password should be at least 8 characters long";
+      newErrors.password = "Password should be at least 8 characters";
 
     if (!formData.confirmPassword)
       newErrors.confirmPassword = "Confirm password is required";
-    else if (formData.password !== formData.confirmPassword)
+    else if (formData.confirmPassword !== formData.password)
       newErrors.confirmPassword = "Passwords do not match";
 
     return newErrors;
   };
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setHasTriedSubmit(true);
     const newErrors = validateFields();
     setErrors(newErrors);
-    console.log(newErrors, formData);
+
     if (Object.keys(newErrors).length === 0) {
-      // Handle form submission
+      try {
+        const {
+          firstName,
+          lastName,
+          class: _class,
+          rollNumber,
+          school,
+          city,
+          sparkCity,
+          email,
+          mobile,
+          heardSpark,
+          password,
+        } = formData;
+
+        await registerUser({
+          variables: {
+            data: {
+              firstName,
+              lastName,
+              class: _class,
+              rollNumber,
+              school,
+              city,
+              sparkCity,
+              email,
+              mobile,
+              heardSpark,
+              password,
+            },
+          },
+        });
+
+        toast.success("Account created successfully! Redirecting...");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      } catch (err: any) {
+        console.error("Signup error:", err);
+        toast.error("Signup failed. Please try again.");
+      }
     }
   };
 

@@ -117,22 +117,41 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
             {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center space-x-4">
               {navLinks.map((link) => renderLink(link))}
-              <a
-                href="/signup"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-transform hover:scale-105"
-              >
-                Signup
-              </a>
-              <a
-                href="/login"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 bg-gray-700 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Login
-              </a>
+
+              {localStorage.getItem("token") ? (
+                <>
+                  <a
+                    href="/dashboard"
+                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-transform hover:scale-105"
+                  >
+                    Dashboard
+                  </a>
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                      window.location.href = "/login";
+                    }}
+                    className="text-gray-300 bg-gray-700 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <a
+                    href="/signup"
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-transform hover:scale-105"
+                  >
+                    Signup
+                  </a>
+                  <a
+                    href="/login"
+                    className="text-gray-300 bg-gray-700 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
+                    Login
+                  </a>
+                </>
+              )}
             </div>
 
             {/* Hamburger Menu Button */}
@@ -187,23 +206,46 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navLinks.map((link) => renderLink(link, true))}
+
             <div className="pt-4 border-t border-gray-700 mt-4">
-              <a
-                href="/signup"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-center bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-base font-medium transition-colors mb-2"
-              >
-                Signup
-              </a>
-              <a
-                href="/login"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-center text-gray-300 bg-gray-700 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors"
-              >
-                Login
-              </a>
+              {localStorage.getItem("token") ? (
+                <>
+                  <a
+                    href="/dashboard"
+                    className="block text-center bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-md text-base font-medium transition-colors mb-2"
+                  >
+                    Dashboard
+                  </a>
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                      window.location.href = "/login"; // or use `navigate` if using `react-router`
+                    }}
+                    className="block w-full text-center text-gray-300 bg-gray-700 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <a
+                    href="/signup"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-center bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-base font-medium transition-colors mb-2"
+                  >
+                    Signup
+                  </a>
+                  <a
+                    href="/login"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-center text-gray-300 bg-gray-700 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors"
+                  >
+                    Login
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </div>
