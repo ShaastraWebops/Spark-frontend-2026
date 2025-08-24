@@ -129,7 +129,11 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
                 }}
                 className="cursor-pointer"
               >
-                <img className="h-8 w-auto" src={logo1} alt="Shaastra Logo" />
+                <img
+                  className="h-12 w-auto relative"
+                  src={logo1}
+                  alt="Shaastra Logo"
+                />
               </a>
             </div>
 

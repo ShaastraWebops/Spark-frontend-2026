@@ -3,9 +3,54 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
+//   return (
+//     <h1
+//       ref={headingRef}
+//       className="text-7xl sm:text-8xl md:text-9xl font-black tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-teal-300 to-green-400 bg-[length:200%_100%]"
+//     >
+//       SPARK
+//     </h1>
+//   );
+// }
+
 const Home: React.FC = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (!headingRef.current) return;
+
+    // Random spark flicker
+    const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+
+    // Big glowing pulse
+    tl.to(headingRef.current, {
+      filter: "drop-shadow(0px 0px 20px rgba(0,255,255,0.9))",
+      duration: 0.2,
+      ease: "power2.in",
+    }).to(headingRef.current, {
+      filter: "drop-shadow(0px 0px 5px rgba(0,255,255,0.4))",
+      duration: 0.3,
+      ease: "power2.out",
+    });
+
+    // Fast flicker
+    gsap.to(headingRef.current, {
+      opacity: 0.6,
+      duration: 0.05,
+      repeat: -1,
+      yoyo: true,
+      repeatDelay: Math.random() * 0.5,
+    });
+
+    // Gradient shimmer sweep
+    gsap.to(headingRef.current, {
+      backgroundPosition: "200% center",
+      duration: 2.5,
+      repeat: -1,
+      ease: "linear",
+    });
+  }, []);
 
   // Your GSAP animation logic is preserved
   useEffect(() => {
@@ -69,11 +114,13 @@ const Home: React.FC = () => {
       >
         SPARK
       </h1>
-      <p 
-        ref={paragraphRef} 
+      <p
+        ref={paragraphRef}
         className="max-w-xl md:max-w-2xl text-lg md:text-xl text-slate-300 font-light leading-relaxed"
       >
-        Spark is an innovative initiative of Shaastra in which we provide a national platform for students to compete and improve themselves at a zero registration fee.
+        Spark is an innovative initiative of Shaastra in which we provide a
+        national platform for students to compete and improve themselves at a
+        zero registration fee.
       </p>
     </div>
   );
