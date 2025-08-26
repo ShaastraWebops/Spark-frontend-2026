@@ -19,7 +19,9 @@ const Login = () => {
     password: "",
   });
 
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
   const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER);
@@ -40,7 +42,7 @@ const Login = () => {
     }
 
     try {
-      await loginUser({
+      const { data } = await loginUser({
         variables: {
           data: {
             email: formData.email,
@@ -49,10 +51,20 @@ const Login = () => {
         },
       });
 
-      toast.success("Login successful!");
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 2000);
+      if (data?.loginUser) {
+        const { role } = data.loginUser;
+        console.log("Login successful, role:", role);
+
+        toast.success("Login successful!");
+
+        setTimeout(() => {
+          if (role === "ADMIN") {
+            navigate("/admin");
+          } else {
+            navigate("/dashboard");
+          }
+        }, 1000);
+      }
     } catch (err: any) {
       console.error("Login failed:", err.message);
       toast.error("Login failed. Please check your credentials.");
@@ -60,74 +72,6 @@ const Login = () => {
   };
 
   return (
-    // <>
-    //   <Navbar showNavbar={false} scrollToSection={() => {}} />
-
-    //   <div className="loginSignupParent">
-    //     <div className="formContainer">
-    //       <h1 className="pageHeading text-center">Log in</h1>
-    //       <div>
-    //         <form onSubmit={handleSubmit}>
-    //           <div className="fieldsCont my-5">
-    //             <label htmlFor="email">
-    //               Email <span className="text-red-500">*</span>
-    //             </label>
-    //             <input
-    //               type="email"
-    //               name="email"
-    //               id="email"
-    //               className="inputs"
-    //               placeholder="Enter email"
-    //               value={formData.email}
-    //               onChange={handleChange}
-    //               required
-    //             />
-    //           </div>
-
-    //           <div className="fieldsCont my-5">
-    //             <label htmlFor="password">
-    //               Password <span className="text-red-500">*</span>
-    //             </label>
-    //             <input
-    //               type="password"
-    //               name="password"
-    //               id="password"
-    //               className="inputs"
-    //               placeholder="Enter password"
-    //               value={formData.password}
-    //               onChange={handleChange}
-    //               required
-    //             />
-    //           </div>
-
-    //           <div className="my-2 flex justify-center">
-    //             <span className="text-gray-500 ">Don't have an account? </span>
-    //             <button className="underline" type="button">
-    //               <Link to="/signup">Create One</Link>
-    //             </button>
-    //           </div>
-
-    //           <div className="my-2 flex justify-center">
-    //             <button className="underline" type="button">
-    //               <Link to="/otp-verification">Forgot Password</Link>
-    //             </button>
-    //           </div>
-
-    //           <div className="flex justify-center">
-    //             <button
-    //               type="submit"
-    //               className="formButton flex justify-center"
-    //               disabled={loading}
-    //             >
-    //               {loading ? "Logging in..." : "Login"}
-    //             </button>
-    //           </div>
-    //         </form>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </>
-
     <>
       <Navbar showNavbar={false} scrollToSection={() => {}} />
       <div className="min-h-screen bg-slate-900 flex items-center justify-center py-8">
@@ -139,7 +83,9 @@ const Login = () => {
             <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Log in to Spark
             </h1>
-            <p className="text-gray-400 text-sm">Welcome back! Please sign in to continue.</p>
+            <p className="text-gray-400 text-sm">
+              Welcome back! Please sign in to continue.
+            </p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
@@ -245,7 +191,7 @@ const Login = () => {
           </form>
         </div>
       </div>
-    </> 
+    </>
   );
 };
 

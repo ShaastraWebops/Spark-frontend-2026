@@ -22,12 +22,13 @@ export const GET_ME = gql`
       school
       class
       sparkCity
+      role
     }
   }
 `;
 
 export const GET_USERS = gql`
-  query {
+  query getUsers {
     users {
       id
       email

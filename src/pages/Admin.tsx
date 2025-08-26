@@ -12,9 +12,7 @@ import { useQuery } from "@apollo/client";
 
 export default function AdminPage() {
   const { data, loading, error } = useQuery(GET_USERS, {
-    context: {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    },
+    fetchPolicy: "network-only", // ensures fresh data
   });
 
   if (loading) return <p>Loading...</p>;
@@ -31,7 +29,7 @@ export default function AdminPage() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.users.map((u: any) => (
+          {data.getUsers.map((u: any) => (
             <TableRow key={u.id}>
               <TableCell>{u.id}</TableCell>
               <TableCell>{u.email}</TableCell>

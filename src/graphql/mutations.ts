@@ -8,7 +8,10 @@ export const REGISTER_USER = gql`
 
 export const LOGIN_USER = gql`
   mutation Login($data: SignInInput!) {
-    loginUser(data: $data)
+    loginUser(data: $data) {
+      email
+      role
+    }
   }
 `;
 
