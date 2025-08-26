@@ -8,7 +8,7 @@ import {
 } from "@apollo/client";
 import App from "./App";
 import Login from "./auth/Login";
-import Signup from "./auth/Signup";
+import Signup from "./auth/fixed-signup-form";
 import "./index.css";
 import SchedulePage from "./pages/Schedulepages";
 import Otp from "./auth/Otp";
