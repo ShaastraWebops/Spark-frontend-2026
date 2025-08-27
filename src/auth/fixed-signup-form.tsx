@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Eye, EyeOff, User, Mail, Phone, MapPin, School, Lock, CheckCircle2, AlertCircle } from "lucide-react";
+import toast from "react-hot-toast";
 
 type FormData = {
   firstName: string;
@@ -30,6 +31,66 @@ type Errors = {
   password?: string;
   confirmPassword?: string;
 };
+
+// Move InputField component outside of the main component
+const InputField = ({ 
+  icon: Icon, 
+  label, 
+  name, 
+  type = "text", 
+  placeholder, 
+  required = false,
+  children,
+  value,
+  onChange,
+  error,
+  hasTriedSubmit
+}: {
+  icon?: any;
+  label: string;
+  name: string;
+  type?: string;
+  placeholder?: string;
+  required?: boolean;
+  children?: React.ReactNode;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
+  error?: string;
+  hasTriedSubmit?: boolean;
+}) => (
+  <div className="space-y-1">
+    <label className="flex items-center gap-1.5 text-xs font-medium text-gray-700">
+      {Icon && <Icon className="w-3 h-3 text-blue-500" />}
+      {label}
+      {required && <span className="text-red-500">*</span>}
+    </label>
+    {children || (
+      <div className="relative">
+        <input
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          className={`w-full px-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 ${
+            error && hasTriedSubmit
+              ? "border-red-500 bg-red-50"
+              : "border-gray-300 hover:border-gray-400"
+          } ${Icon ? "pl-8" : ""}`}
+        />
+        {Icon && (
+          <Icon className="absolute left-2.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+        )}
+      </div>
+    )}
+    {error && hasTriedSubmit && (
+      <div className="flex items-center gap-1 text-red-500 text-xs">
+        <AlertCircle className="w-3 h-3" />
+        {error}
+      </div>
+    )}
+  </div>
+);
 
 const Signup = () => {
   useEffect(() => {
@@ -139,7 +200,9 @@ const Signup = () => {
         await new Promise(resolve => setTimeout(resolve, 2000));
         
         // Success simulation
-        alert("Account created successfully! Redirecting...");
+        // alert("Account created successfully! Redirecting...");
+
+        toast.success("Account created successfully! Redirecting...");
         
       } catch (err: any) {
         console.error("Signup error:", err);
@@ -156,57 +219,6 @@ const Signup = () => {
     "Pondicherry", "Salem", "Thanjavur", "Tirunelveli", "Tirupati", "Tiruppur",
     "Trivandrum", "Vellore", "Warangal"
   ];
-
-  const InputField = ({ 
-    icon: Icon, 
-    label, 
-    name, 
-    type = "text", 
-    placeholder, 
-    required = false,
-    children 
-  }: {
-    icon?: any;
-    label: string;
-    name: string;
-    type?: string;
-    placeholder?: string;
-    required?: boolean;
-    children?: React.ReactNode;
-  }) => (
-    <div className="space-y-1">
-      <label className="flex items-center gap-1.5 text-xs font-medium text-gray-700">
-        {Icon && <Icon className="w-3 h-3 text-blue-500" />}
-        {label}
-        {required && <span className="text-red-500">*</span>}
-      </label>
-      {children || (
-        <div className="relative">
-          <input
-            type={type}
-            name={name}
-            placeholder={placeholder}
-            value={formData[name as keyof FormData]}
-            onChange={handleChange}
-            className={`w-full px-3 py-2 text-sm border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 ${
-              errors[name as keyof Errors] && hasTriedSubmit
-                ? "border-red-500 bg-red-50"
-                : "border-gray-300 hover:border-gray-400"
-            } ${Icon ? "pl-8" : ""}`}
-          />
-          {Icon && (
-            <Icon className="absolute left-2.5 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-          )}
-        </div>
-      )}
-      {errors[name as keyof Errors] && hasTriedSubmit && (
-        <div className="flex items-center gap-1 text-red-500 text-xs">
-          <AlertCircle className="w-3 h-3" />
-          {errors[name as keyof Errors]}
-        </div>
-      )}
-    </div>
-  );
 
   const passwordStrength = getPasswordStrength(formData.password);
 
@@ -235,6 +247,10 @@ const Signup = () => {
                 name="firstName"
                 placeholder="John"
                 required
+                value={formData.firstName}
+                onChange={handleChange}
+                error={errors.firstName}
+                hasTriedSubmit={hasTriedSubmit}
               />
 
               <InputField
@@ -243,6 +259,10 @@ const Signup = () => {
                 name="lastName"
                 placeholder="Doe"
                 required
+                value={formData.lastName}
+                onChange={handleChange}
+                error={errors.lastName}
+                hasTriedSubmit={hasTriedSubmit}
               />
 
               <InputField
@@ -250,6 +270,8 @@ const Signup = () => {
                 label="Class"
                 name="class"
                 required
+                error={errors.class}
+                hasTriedSubmit={hasTriedSubmit}
               >
                 <select
                   name="class"
@@ -274,6 +296,10 @@ const Signup = () => {
                 name="rollNumber"
                 placeholder="Enter your roll number"
                 required
+                value={formData.rollNumber}
+                onChange={handleChange}
+                error={errors.rollNumber}
+                hasTriedSubmit={hasTriedSubmit}
               />
 
               <InputField
@@ -282,6 +308,10 @@ const Signup = () => {
                 name="school"
                 placeholder="Enter your school name"
                 required
+                value={formData.school}
+                onChange={handleChange}
+                error={errors.school}
+                hasTriedSubmit={hasTriedSubmit}
               />
 
               <InputField
@@ -290,6 +320,10 @@ const Signup = () => {
                 name="city"
                 placeholder="Enter your city"
                 required
+                value={formData.city}
+                onChange={handleChange}
+                error={errors.city}
+                hasTriedSubmit={hasTriedSubmit}
               />
 
               <InputField
@@ -297,6 +331,8 @@ const Signup = () => {
                 label="Spark City"
                 name="sparkCity"
                 required
+                error={errors.sparkCity}
+                hasTriedSubmit={hasTriedSubmit}
               >
                 <select
                   name="sparkCity"
@@ -322,6 +358,10 @@ const Signup = () => {
                 type="email"
                 placeholder="Enter your email"
                 required
+                value={formData.email}
+                onChange={handleChange}
+                error={errors.email}
+                hasTriedSubmit={hasTriedSubmit}
               />
 
               <InputField
@@ -331,6 +371,10 @@ const Signup = () => {
                 type="tel"
                 placeholder="Enter your mobile number"
                 required
+                value={formData.mobile}
+                onChange={handleChange}
+                error={errors.mobile}
+                hasTriedSubmit={hasTriedSubmit}
               />
 
               {/* Have you heard of Spark */}
