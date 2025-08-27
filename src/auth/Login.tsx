@@ -57,13 +57,11 @@ const Login = () => {
 
         toast.success("Login successful!");
 
-        setTimeout(() => {
-          if (role === "ADMIN") {
-            navigate("/admin");
-          } else {
-            navigate("/dashboard");
-          }
-        }, 1000);
+        if (role === "ADMIN") {
+          navigate("/admin");
+        } else {
+          navigate("/dashboard");
+        }
       }
     } catch (err: any) {
       console.error("Login failed:", err.message);

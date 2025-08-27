@@ -45,7 +45,9 @@ const Signup = () => {
   const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
 
-  const [registerUser, { loading }] = useMutation(REGISTER_USER);
+  const [registerUser, { loading }] = useMutation(REGISTER_USER, {
+    context: { fetchOptions: { credentials: "include" } }, // ✅ include cookie
+  });
 
   const handleChange = (
     e: React.ChangeEvent<
