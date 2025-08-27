@@ -54,14 +54,16 @@ const Login = () => {
       if (data?.loginUser) {
         const { role } = data.loginUser;
         console.log("Login successful, role:", role);
+        
 
         toast.success("Login successful!");
-
-        if (role === "ADMIN") {
-          navigate("/admin");
-        } else {
-          navigate("/dashboard");
-        }
+        setTimeout(() => {
+          if (role === "ADMIN") {
+            navigate("/admin");
+          } else {
+            navigate("/dashboard");
+          }
+        }, 1000);
       }
     } catch (err: any) {
       console.error("Login failed:", err.message);

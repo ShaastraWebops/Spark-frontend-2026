@@ -1,6 +1,20 @@
 import { useState, useEffect } from "react";
-import { Eye, EyeOff, User, Mail, Phone, MapPin, School, Lock, CheckCircle2, AlertCircle } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  School,
+  Lock,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { REGISTER_USER } from "../graphql/mutations"; // update path if needed
 
 type FormData = {
   firstName: string;
@@ -33,18 +47,18 @@ type Errors = {
 };
 
 // Move InputField component outside of the main component
-const InputField = ({ 
-  icon: Icon, 
-  label, 
-  name, 
-  type = "text", 
-  placeholder, 
+const InputField = ({
+  icon: Icon,
+  label,
+  name,
+  type = "text",
+  placeholder,
   required = false,
   children,
   value,
   onChange,
   error,
-  hasTriedSubmit
+  hasTriedSubmit,
 }: {
   icon?: any;
   label: string;
@@ -54,7 +68,11 @@ const InputField = ({
   required?: boolean;
   children?: React.ReactNode;
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
+  onChange?: (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => void;
   error?: string;
   hasTriedSubmit?: boolean;
 }) => (
@@ -94,8 +112,8 @@ const InputField = ({
 
 const Signup = () => {
   useEffect(() => {
-      document.title = "Signup | Spark";
-    }, []);
+    document.title = "Signup | Spark";
+  }, []);
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -116,19 +134,25 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [registerUser, _] = useMutation(REGISTER_USER, {
+    context: { fetchOptions: { credentials: "include" } }, // ✅ include cookie
+  });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
-    
+
     // Clear error when user starts typing
     if (errors[name as keyof Errors]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }));
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
 
@@ -179,10 +203,17 @@ const Signup = () => {
   };
 
   const getPasswordStrength = (password: string) => {
-    if (password.length < 4) return { strength: 0, text: "Too weak", color: "bg-red-500" };
-    if (password.length < 6) return { strength: 1, text: "Weak", color: "bg-orange-500" };
-    if (password.length < 8) return { strength: 2, text: "Fair", color: "bg-yellow-500" };
-    if (password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password)) 
+    if (password.length < 4)
+      return { strength: 0, text: "Too weak", color: "bg-red-500" };
+    if (password.length < 6)
+      return { strength: 1, text: "Weak", color: "bg-orange-500" };
+    if (password.length < 8)
+      return { strength: 2, text: "Fair", color: "bg-yellow-500" };
+    if (
+      password.length >= 8 &&
+      /[A-Za-z]/.test(password) &&
+      /\d/.test(password)
+    )
       return { strength: 3, text: "Strong", color: "bg-green-500" };
     return { strength: 2, text: "Fair", color: "bg-yellow-500" };
   };
@@ -196,28 +227,70 @@ const Signup = () => {
     if (Object.keys(newErrors).length === 0) {
       setLoading(true);
       try {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Success simulation
-        // alert("Account created successfully! Redirecting...");
+        const {
+          firstName,
+          lastName,
+          class: _class,
+          rollNumber,
+          school,
+          city,
+          sparkCity,
+          email,
+          mobile,
+          heardSpark,
+          password,
+        } = formData;
+
+        await registerUser({
+          variables: {
+            data: {
+              firstName,
+              lastName,
+              class: _class,
+              rollNumber,
+              school,
+              city,
+              sparkCity,
+              email,
+              mobile,
+              heardSpark,
+              password,
+            },
+          },
+        });
 
         toast.success("Account created successfully! Redirecting...");
-        
+        navigate("/dashboard");
+
       } catch (err: any) {
         console.error("Signup error:", err);
-        alert("Signup failed. Please try again.");
-      } finally {
-        setLoading(false);
+        toast.error("Signup failed. Please try again.");
       }
     }
   };
 
   const sparkCities = [
-    "Alappuzha", "Bangalore", "Chennai", "Coimbatore", "Guntur", "Hyderabad",
-    "Kanchipuram", "Kochi", "Madurai", "Mangalore", "Mysore", "Nellore",
-    "Pondicherry", "Salem", "Thanjavur", "Tirunelveli", "Tirupati", "Tiruppur",
-    "Trivandrum", "Vellore", "Warangal"
+    "Alappuzha",
+    "Bangalore",
+    "Chennai",
+    "Coimbatore",
+    "Guntur",
+    "Hyderabad",
+    "Kanchipuram",
+    "Kochi",
+    "Madurai",
+    "Mangalore",
+    "Mysore",
+    "Nellore",
+    "Pondicherry",
+    "Salem",
+    "Thanjavur",
+    "Tirunelveli",
+    "Tirupati",
+    "Tiruppur",
+    "Trivandrum",
+    "Vellore",
+    "Warangal",
   ];
 
   const passwordStrength = getPasswordStrength(formData.password);
@@ -225,19 +298,20 @@ const Signup = () => {
   return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center py-8">
       <div className="max-w-6xl mx-auto px-4 py-6">
-
         {/* Form */}
         <div className="bg-white rounded-xl shadow-xl border border-gray-100 p-6">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-2">
-            <User className="w-6 h-6 text-white" />
+          {/* Header */}
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-2">
+              <User className="w-6 h-6 text-white" />
+            </div>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Create Your Account
+            </h1>
+            <p className="text-gray-400 text-sm">
+              Join Spark and unlock your potential
+            </p>
           </div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Create Your Account
-          </h1>
-          <p className="text-gray-400 text-sm">Join Spark and unlock your potential</p>
-        </div>
           <div className="space-y-4">
             <div className="grid md:grid-cols-3 gap-4">
               {/* Personal Information */}
@@ -283,7 +357,9 @@ const Signup = () => {
                       : "border-gray-300 hover:border-gray-400"
                   }`}
                 >
-                  <option value="" disabled>Select your Class</option>
+                  <option value="" disabled>
+                    Select your Class
+                  </option>
                   <option value="7">7</option>
                   <option value="8">8</option>
                   <option value="9">9</option>
@@ -344,9 +420,13 @@ const Signup = () => {
                       : "border-gray-300 hover:border-gray-400"
                   }`}
                 >
-                  <option value="" disabled>Select Spark City</option>
-                  {sparkCities.map(city => (
-                    <option key={city} value={city}>{city}</option>
+                  <option value="" disabled>
+                    Select Spark City
+                  </option>
+                  {sparkCities.map((city) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
                   ))}
                 </select>
               </InputField>
@@ -441,7 +521,11 @@ const Signup = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
                   </button>
                 </div>
                 {formData.password && (
@@ -451,12 +535,19 @@ const Signup = () => {
                         <div
                           key={i}
                           className={`h-0.5 w-full rounded ${
-                            i <= passwordStrength.strength ? passwordStrength.color : "bg-gray-200"
+                            i <= passwordStrength.strength
+                              ? passwordStrength.color
+                              : "bg-gray-200"
                           }`}
                         />
                       ))}
                     </div>
-                    <p className={`text-xs ${passwordStrength.color.replace('bg-', 'text-')}`}>
+                    <p
+                      className={`text-xs ${passwordStrength.color.replace(
+                        "bg-",
+                        "text-"
+                      )}`}
+                    >
                       {passwordStrength.text}
                     </p>
                   </div>
@@ -494,15 +585,20 @@ const Signup = () => {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
-                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showConfirmPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
                   </button>
                 </div>
-                {formData.confirmPassword && formData.password === formData.confirmPassword && (
-                  <div className="flex items-center gap-1 text-green-500 text-xs">
-                    <CheckCircle2 className="w-3 h-3" />
-                    Passwords match
-                  </div>
-                )}
+                {formData.confirmPassword &&
+                  formData.password === formData.confirmPassword && (
+                    <div className="flex items-center gap-1 text-green-500 text-xs">
+                      <CheckCircle2 className="w-3 h-3" />
+                      Passwords match
+                    </div>
+                  )}
                 {errors.confirmPassword && hasTriedSubmit && (
                   <div className="flex items-center gap-1 text-red-500 text-xs">
                     <AlertCircle className="w-3 h-3" />
@@ -537,7 +633,10 @@ const Signup = () => {
             <div className="text-center pt-4 border-t">
               <p className="text-gray-600">
                 Already have an account?{" "}
-                <a href="/login" className="text-blue-600 hover:text-blue-700 font-semibold">
+                <a
+                  href="/login"
+                  className="text-blue-600 hover:text-blue-700 font-semibold"
+                >
                   Log in here
                 </a>
               </p>

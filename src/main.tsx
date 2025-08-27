@@ -28,7 +28,8 @@ const client = new ApolloClient({
 });
 
 function RoutesWithAuth() {
-  const { data, loading } = useQuery(GET_ME);
+  const { data, error, loading } = useQuery(GET_ME, { errorPolicy: "all" });
+  console.log("The error in adminROute", error);
 
   if (loading) return <p>Loading...</p>;
 
