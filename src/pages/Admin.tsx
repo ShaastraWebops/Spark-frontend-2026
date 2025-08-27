@@ -32,13 +32,27 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center p-6 bg-slate-900">
-      <Typography
-        variant="h4"
-        sx={{ mb: 4, fontWeight: "bold" }}
-        className="text-white"
-      >
-        Admin Dashboard
-      </Typography>
+      <div className="flex flex-col items-center mb-6">
+        <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-7 h-7 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+        </div>
+        <h1 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500">
+          Admin Dashboard
+        </h1>
+      </div>
 
       <TableContainer
         component={Paper}
