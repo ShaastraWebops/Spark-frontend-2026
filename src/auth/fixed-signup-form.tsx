@@ -261,7 +261,6 @@ const Signup = () => {
 
         toast.success("Account created successfully! Redirecting...");
         navigate("/dashboard");
-
       } catch (err: any) {
         console.error("Signup error:", err);
         toast.error("Signup failed. Please try again.");
@@ -296,8 +295,8 @@ const Signup = () => {
   const passwordStrength = getPasswordStrength(formData.password);
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center py-8">
-      <div className="max-w-6xl mx-auto px-4 py-6">
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+      <div className="max-w-6xl mx-auto flex items-center justify-center">
         {/* Form */}
         <div className="bg-white rounded-xl shadow-xl border border-gray-100 p-6">
           {/* Header */}
