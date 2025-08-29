@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
-import './login-signup.css';
+import { useMutation } from "@apollo/client";
+import { REGISTER_USER } from "../graphql/mutations"; // update path if needed
+import "./login-signup.css";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-// Error types
 type Errors = {
   firstName?: string;
   lastName?: string;
@@ -17,12 +20,12 @@ type Errors = {
   confirmPassword?: string;
 };
 
-// Signup component
 const Signup = () => {
-
   useEffect(() => {
-    document.title = "Signup";
+    document.title = "Signup | Spark";
   }, []);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -38,9 +41,13 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
-  const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
+  const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
+
+  const [registerUser, { loading }] = useMutation(REGISTER_USER, {
+    context: { fetchOptions: { credentials: "include" } }, // ✅ include cookie
+  });
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -54,42 +61,39 @@ const Signup = () => {
     });
   };
 
-  // Validation of each field and setting errors accordingly
   const validateFields = () => {
     const newErrors: Errors = {};
-
-    const firstNamePattern = /^[a-zA-Z\s]+$/;
+    const namePattern = /^[a-zA-Z\s]+$/;
     const mobilePattern = /^\d{10}$/;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // const pincodePattern = /^\d{6}$/;
 
     if (!formData.firstName) newErrors.firstName = "First name is required";
-    else if (!firstNamePattern.test(formData.firstName))
+    else if (!namePattern.test(formData.firstName))
       newErrors.firstName = "First name must contain only letters and spaces";
 
     if (!formData.lastName) newErrors.lastName = "Last name is required";
-    else if (!firstNamePattern.test(formData.lastName))
+    else if (!namePattern.test(formData.lastName))
       newErrors.lastName = "Last name must contain only letters and spaces";
 
     if (!formData.class) newErrors.class = "Class is required";
+    if (!formData.rollNumber) newErrors.rollNumber = "Roll number is required";
 
     if (!formData.school) newErrors.school = "School is required";
-    else if (!firstNamePattern.test(formData.school))
-      newErrors.school = "School name must contain only letters and spaces";
+    else if (!namePattern.test(formData.school))
+      newErrors.school = "School must contain only letters and spaces";
 
     if (!formData.city) newErrors.city = "City is required";
-    else if (!firstNamePattern.test(formData.city))
-      newErrors.city = "City name must contain only letters and spaces";
+    else if (!namePattern.test(formData.city))
+      newErrors.city = "City must contain only letters and spaces";
 
     if (!formData.sparkCity) newErrors.sparkCity = "Spark City is required";
 
-    if (!formData.rollNumber) newErrors.rollNumber = "Roll number is required";
-    
-    if (!formData.heardSpark) newErrors.heardSpark = "Please answer this question";
+    if (!formData.heardSpark)
+      newErrors.heardSpark = "Please answer this question";
 
     if (!formData.email) newErrors.email = "Email is required";
     else if (!emailPattern.test(formData.email))
-      newErrors.email = "Email must be a valid email address";
+      newErrors.email = "Invalid email address";
 
     if (!formData.mobile) newErrors.mobile = "Mobile number is required";
     else if (!mobilePattern.test(formData.mobile))
@@ -97,38 +101,80 @@ const Signup = () => {
 
     if (!formData.password) newErrors.password = "Password is required";
     else if (formData.password.length < 8)
-      newErrors.password = "Password should be at least 8 characters long";
+      newErrors.password = "Password should be at least 8 characters";
 
     if (!formData.confirmPassword)
       newErrors.confirmPassword = "Confirm password is required";
-    else if (formData.password !== formData.confirmPassword)
+    else if (formData.confirmPassword !== formData.password)
       newErrors.confirmPassword = "Passwords do not match";
 
     return newErrors;
   };
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setHasTriedSubmit(true);
     const newErrors = validateFields();
     setErrors(newErrors);
-    console.log(newErrors, formData);
+
     if (Object.keys(newErrors).length === 0) {
-      // Handle form submission
+      try {
+        const {
+          firstName,
+          lastName,
+          class: _class,
+          rollNumber,
+          school,
+          city,
+          sparkCity,
+          email,
+          mobile,
+          heardSpark,
+          password,
+        } = formData;
+
+        await registerUser({
+          variables: {
+            data: {
+              firstName,
+              lastName,
+              class: _class,
+              rollNumber,
+              school,
+              city,
+              sparkCity,
+              email,
+              mobile,
+              heardSpark,
+              password,
+            },
+          },
+        });
+
+        console.log("kuch bhi");
+        // toast.success("Account created successfully! Redirecting...");
+        toast.success("Is this really running?");
+        navigate("/dashboard");
+        console.log("Signup successful, redirecting to dashboard");
+      } catch (err: any) {
+        console.error("Signup error:", err);
+        toast.error("Signup failed. Please try again.");
+      }
     }
   };
 
   return (
     <>
+      {/* <Navbar showNavbar={false} scrollToSection={() => {}} /> */}
+
       <div className="loginSignupParent">
         <div className="formContainer">
-          <h2 className="text-4xl font-bold">Signup</h2>
+          <h2 className="pageHeading text-center">Signup</h2>
           <form onSubmit={handleSubmit}>
             <div className="grid sm:grid-cols-2 grid-cols-1 gap-x-10">
               <div className="fieldsCont">
                 <label htmlFor="firstName">
-                  First Name <span className='text-red-500'>*</span>
+                  First Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -146,7 +192,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="lastName">
-                  Last Name <span className='text-red-500'>*</span>
+                  Last Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -164,7 +210,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="class">
-                  Class <span className='text-red-500'>*</span>
+                  Class <span className="text-red-500">*</span>
                 </label>
                 <select
                   name="class"
@@ -173,7 +219,9 @@ const Signup = () => {
                   required
                   className="inputs"
                 >
-                  <option value="" selected disabled hidden>Select your Class</option>
+                  <option value="" selected disabled hidden>
+                    Select your Class
+                  </option>
                   <option className="none" value=""></option>
                   <option value="7">7</option>
                   <option value="8">8</option>
@@ -187,7 +235,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="rollNumber">
-                  Roll Number <span className='text-red-500'>*</span>
+                  Roll Number <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -205,7 +253,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="school">
-                  School <span className='text-red-500'>*</span>
+                  School <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -223,7 +271,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="city">
-                  City <span className='text-red-500'>*</span>
+                  City <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -241,7 +289,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="sparkCity">
-                  Spark City <span className='text-red-500'>*</span>
+                  Spark City <span className="text-red-500">*</span>
                 </label>
                 <select
                   name="sparkCity"
@@ -250,7 +298,9 @@ const Signup = () => {
                   required
                   className="inputs"
                 >
-                  <option value="" selected disabled hidden>Select Spark City</option>
+                  <option value="" selected disabled hidden>
+                    Select Spark City
+                  </option>
                   <option className="none" value=""></option>
                   <option value="Alappuzha">Alappuzha</option>
                   <option value="Bangalore">Bangalore</option>
@@ -281,7 +331,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="email">
-                  Email <span className='text-red-500'>*</span>
+                  Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
@@ -299,7 +349,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="mobile">
-                  Mobile Number <span className='text-red-500'>*</span>
+                  Mobile Number <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="tel"
@@ -317,15 +367,31 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="heardSpark">
-                  Have you heard of <br />Spark or Shaastra before? <span className='text-red-500'>*</span>
+                  Have you heard of <br />
+                  Spark or Shaastra before?{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <div className="flex items-center justify-evenly">
                   <div className="flex gap-2">
-                    <input type="radio" name="heardSpark" id="yes" value={"yes"}/>
+                    <input
+                      type="radio"
+                      name="heardSpark"
+                      id="yes"
+                      value={"yes"}
+                      onChange={handleChange}
+                      className="hover:cursor-pointer"
+                    />
                     <label htmlFor="yes">Yes</label>
                   </div>
                   <div className="flex gap-2">
-                    <input type="radio" name="heardSpark" id="no" value={"no"}/>
+                    <input
+                      type="radio"
+                      name="heardSpark"
+                      id="no"
+                      value={"no"}
+                      onChange={handleChange}
+                      className="hover:cursor-pointer"
+                    />
                     <label htmlFor="no">No</label>
                   </div>
                 </div>
@@ -334,10 +400,9 @@ const Signup = () => {
                 )}
               </div>
 
-
               <div className="fieldsCont">
                 <label htmlFor="password">
-                  Create Password <span className='text-red-500'>*</span>
+                  Create Password <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="password"
@@ -355,7 +420,7 @@ const Signup = () => {
 
               <div className="fieldsCont">
                 <label htmlFor="confirmPassword">
-                  Confirm Password <span className='text-red-500'>*</span>
+                  Confirm Password <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="password"
@@ -371,12 +436,11 @@ const Signup = () => {
                 )}
               </div>
             </div>
-            <button
-              type="submit"
-              className="bg-amber-600 px-6 hover:scale-105 duration-150 ease-in-out py-2 my-4 rounded-lg drop-shadow-2xl text-2xl text-white"
-            >
-              Create Account
-            </button>
+            <div className="flex justify-center mt-6">
+              <button type="submit" className="formButton">
+                Create Account
+              </button>
+            </div>
           </form>
         </div>
       </div>

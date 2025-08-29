@@ -10,3 +10,29 @@ export const GET_USER = gql`
     }
   }
 `;
+
+export const GET_ME = gql`
+  query GetMe {
+    getMe {
+      firstName
+      lastName
+      email
+      city
+      mobile
+      school
+      class
+      sparkCity
+      role
+    }
+  }
+`;
+
+export const GET_USERS = gql`
+  query getUsers {
+    getUsers {
+      id
+      email
+      role
+    }
+  }
+`;
