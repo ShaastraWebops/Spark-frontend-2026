@@ -42,14 +42,6 @@ const Structure: React.FC = () => {
           elementRefs.current.push(el)
         }
       >
-        {/* Image */}
-        <div>
-          <img
-            src={i1}
-            alt="Quiz competition visual"
-            className="w-full h-auto rounded-xl shadow-lg shadow-blue-900/50 ring-1 ring-white/10"
-          />
-        </div>
         {/* Text */}
         <div>
           <h2 className="text-3xl font-bold text-blue-400 mb-2">Round 1</h2>
@@ -89,6 +81,15 @@ const Structure: React.FC = () => {
             </a>
           </div>
         </div>
+
+        {/* Image */}
+        <div>
+          <img
+            src={i1}
+            alt="Quiz competition visual"
+            className="w-full h-auto rounded-xl shadow-lg shadow-blue-900/50 ring-1 ring-white/10"
+          />
+        </div>
       </div>
       {/* --- Round 2 --- */}
       <div
@@ -100,7 +101,7 @@ const Structure: React.FC = () => {
         }
       >
         {/* Text */}
-        <div>
+        <div className="order-1 md:order-2">
           <h2 className="text-3xl font-bold text-green-400 mb-2">Round 2</h2>
           <h4 className="text-xl font-semibold text-white mb-4">
             Online Case Study Competition
@@ -121,7 +122,7 @@ const Structure: React.FC = () => {
           </ul>
         </div>
         {/* Image */}
-        <div>
+        <div className="order-2 md:order-1">
           <img
             src={i2}
             alt="Case study competition visual"
@@ -138,14 +139,6 @@ const Structure: React.FC = () => {
           elementRefs.current.push(el)
         }
       >
-        {/* Image */}
-        <div>
-          <img
-            src={i3}
-            alt="Championship event visual"
-            className="w-full h-auto rounded-xl shadow-lg shadow-purple-900/50 ring-1 ring-white/10"
-          />
-        </div>
         {/* Text */}
         <div>
           <h2 className="text-3xl font-bold text-purple-400 mb-2">Round 3</h2>
@@ -167,6 +160,14 @@ const Structure: React.FC = () => {
               to the selected teams.
             </li>
           </ul>
+        </div>
+        {/* Image */}
+        <div>
+          <img
+            src={i3}
+            alt="Championship event visual"
+            className="w-full h-auto rounded-xl shadow-lg shadow-purple-900/50 ring-1 ring-white/10"
+          />
         </div>
       </div>
     </>
