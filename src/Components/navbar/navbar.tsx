@@ -117,7 +117,8 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
           showNavbar ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* ✅ ADDED pb-2 FOR PADDING-BOTTOM */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-2">
           <div className="flex items-center justify-between h-16 ">
             {/* Logo */}
             <div className="flex-shrink-0">
@@ -129,8 +130,9 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
                 }}
                 className="cursor-pointer"
               >
+                {/* ✅ CORRECTED LOGO HEIGHT AND POSITION */}
                 <img
-                  className="h-12 w-auto relative"
+                  className="h-18 w-auto relative top-1.5"
                   src={logo1}
                   alt="Shaastra Logo"
                 />
@@ -241,7 +243,7 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
                   <button
                     onClick={() => {
                       localStorage.removeItem("token");
-                      window.location.href = "/login"; // or use `navigate` if using `react-router`
+                      window.location.href = "/login"; // or use `Maps` if using `react-router`
                     }}
                     className="block w-full text-center text-gray-300 bg-gray-700 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-base font-medium transition-colors"
                   >
