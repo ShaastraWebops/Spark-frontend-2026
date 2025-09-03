@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
@@ -24,16 +29,10 @@ const endpoint = import.meta.env.VITE_GRAPHQL_ENDPOINT;
 const client = new ApolloClient({
   uri: endpoint,
   cache: new InMemoryCache(),
-  credentials: "include", // 👈 important for cookies
+  credentials: "include", //  important for cookies
 });
 
 function RoutesWithAuth() {
-  const { data, error, loading } = useQuery(GET_ME, { errorPolicy: "all" });
-  console.log("The error in adminROute", error);
-
-  if (loading) return <p>Loading...</p>;
-
-  const user = data?.getMe || null;
 
   return (
     <Routes>
@@ -48,7 +47,7 @@ function RoutesWithAuth() {
       <Route
         path="/admin"
         element={
-          <AdminRoute user={user}>
+          <AdminRoute>
             <AdminPage />
           </AdminRoute>
         }

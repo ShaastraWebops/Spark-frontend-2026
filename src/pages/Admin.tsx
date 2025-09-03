@@ -90,7 +90,7 @@ export default function AdminPage() {
                   },
                 }}
               >
-                <TableCell>{index + 1}</TableCell> {/* Serial number */}
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{u.email}</TableCell>
                 <TableCell>{u.role}</TableCell>
               </TableRow>

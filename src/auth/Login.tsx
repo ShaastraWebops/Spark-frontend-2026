@@ -53,20 +53,19 @@ const Login = () => {
 
       if (data?.loginUser) {
         const { role } = data.loginUser;
-        console.log("Login successful, role:", role);
-        
+        // console.log("Login successful, role:", role);   -->  log here in development
 
         toast.success("Login successful!");
         setTimeout(() => {
-          if (role === "ADMIN") {
-            navigate("/admin");
+          if (role == "ADMIN") {
+            navigate("/admin"); // log here in development
           } else {
-            navigate("/dashboard");
+            navigate("/dashboard"); //  log here in development
           }
         }, 1000);
       }
     } catch (err: any) {
-      console.error("Login failed:", err.message);
+      console.error("Login failed:", err.message); //--> log here in development
       toast.error("Login failed. Please check your credentials.");
     }
   };
