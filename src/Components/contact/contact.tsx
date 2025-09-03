@@ -71,7 +71,7 @@ const Contact: React.FC = () => {
   ];
 
   // ✨ Define variants for the container (the grid) to orchestrate animations
-  const containerVariants:Variants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
