@@ -1,28 +1,76 @@
 import React from "react";
-// import "./about.css";
 import about from "../../assets/2.jpg";
-import { useScrollTriggerAnimation } from "../../useScrollTriggerAnimation";
+import { motion } from "framer-motion"; // 1. Import motion
 
 const About: React.FC = () => {
-  const elementRefs = useScrollTriggerAnimation();
+  // 2. Define animation variants for a modern look
+
+  // A container variant to orchestrate staggered animations
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2, // Animate children with a 0.2s delay between them
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  // Variant for elements fading in from the left
+  const fadeInLeft = {
+    hidden: { opacity: 0, x: -50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  // Variant for elements fading in from the right
+  const fadeInRight = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  // Variant for elements fading in from the bottom
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
 
   return (
     <>
-      <div className=" px-10 mb-4 md:mb-8 lg:mb-12 xl:mb-16 2xl:mb-20 mt-4 md:mt-8 lg:mt-12 xl:mt-16 2xl:mt-20"
-        ref={(el) =>
-          el &&
-          !elementRefs.current.includes(el) &&
-          elementRefs.current.push(el)
-        }
+      {/* 3. Apply variants to motion components */}
+      <motion.div
+        className="px-10 mb-4 md:mb-8 lg:mb-12 xl:mb-16 2xl:mb-20 mt-4 md:mt-8 lg:mt-12 xl:mt-16 2xl:mt-20"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.1 }} // Trigger when 20% is visible
       >
-        <h3 className="text-4xl md:text-5xl font-extrabold text-center mb-12 bg-gradient-to-r from-blue-400 to-teal-400 text-transparent bg-clip-text">
+        <motion.h3
+          className="text-4xl md:text-5xl font-extrabold text-center mb-12 bg-gradient-to-r from-blue-400 to-teal-400 text-transparent bg-clip-text"
+          variants={fadeInUp} // Title fades up
+        >
           About Shaastra
-        </h3>
+        </motion.h3>
 
         {/* Responsive Two-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* Text Column */}
-          <div className="flex flex-col gap-4">
+          <motion.div
+            className="flex flex-col gap-4"
+            variants={fadeInLeft} 
+            viewport={{ once: false, amount: 0.1 }}// Text fades in from the left
+          >
             <p className="text-lg text-slate-300 leading-relaxed">
               Shaastra is the annual technical festival of IIT Madras. Ever
               since its inception in the year 2000, Shaastra has been an
@@ -34,20 +82,25 @@ const About: React.FC = () => {
               Every edition of Shaastra features a wide variety of events
               encompassing the entire spectrum of innovation.
             </p>
-          </div>
+          </motion.div>
 
           {/* Image Column */}
-          <div>
+          <motion.div
+            variants={fadeInRight} // Image fades in from the right
+          >
             <img
               src={about}
               alt="A glimpse of a Shaastra event"
               className="w-full h-auto rounded-xl shadow-lg shadow-blue-900/50 ring-1 ring-white/10"
             />
-          </div>
+          </motion.div>
         </div>
 
         {/* Second Paragraph Below the Grid */}
-        <div className="mt-12">
+        <motion.div
+          className="mt-12"
+          variants={fadeInUp} // Second paragraph fades up
+        >
           <p className="text-lg text-slate-300 leading-relaxed">
             To ensure a steep learning curve, numerous workshops, lectures, and
             video conferences dealing with diverse spheres of science,
@@ -60,8 +113,8 @@ const About: React.FC = () => {
             Innovation & Technology in the tech-savvy scientific young student
             minds of the country.
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </>
   );
 };
