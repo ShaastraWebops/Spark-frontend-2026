@@ -22,7 +22,7 @@ const About: React.FC = () => {
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
   };
 
@@ -32,7 +32,7 @@ const About: React.FC = () => {
     visible: {
       opacity: 1,
       x: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
   };
 
@@ -42,7 +42,7 @@ const About: React.FC = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
   };
 
@@ -54,7 +54,7 @@ const About: React.FC = () => {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }} // Trigger when 20% is visible
+        viewport={{ once: false, amount: 0.1 }} // Trigger when 20% is visible
       >
         <motion.h3
           className="text-4xl md:text-5xl font-extrabold text-center mb-12 bg-gradient-to-r from-blue-400 to-teal-400 text-transparent bg-clip-text"
@@ -68,7 +68,8 @@ const About: React.FC = () => {
           {/* Text Column */}
           <motion.div
             className="flex flex-col gap-4"
-            variants={fadeInLeft} // Text fades in from the left
+            variants={fadeInLeft} 
+            viewport={{ once: false, amount: 0.1 }}// Text fades in from the left
           >
             <p className="text-lg text-slate-300 leading-relaxed">
               Shaastra is the annual technical festival of IIT Madras. Ever

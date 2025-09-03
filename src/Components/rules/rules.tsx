@@ -75,7 +75,7 @@ const Rules: React.FC = () => {
                         initial="hidden"
                         whileInView="visible"
                         whileHover="hover"
-                        viewport={{ once: true, amount: 0.3 }}
+                        viewport={{ once: false, amount: 0.3 }}
                     >
                         {/* Content for Card 1... */}
                         <div className="flex items-center mb-4">
@@ -113,7 +113,7 @@ const Rules: React.FC = () => {
                         initial="hidden"
                         whileInView="visible"
                         whileHover="hover"
-                        viewport={{ once: true, amount: 0.3 }}
+                        viewport={{ once: false, amount: 0.3 }}
                     >
                         {/* Content for Card 2... */}
                         <div className="flex items-center mb-4">

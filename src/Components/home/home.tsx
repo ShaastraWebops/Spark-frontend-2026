@@ -104,7 +104,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen w-full text-white px-4 text-center overflow-hidden ">
+    <div className="relative flex flex-col items-center justify-center  sm:min-h-screen  w-full text-white px-4 text-center overflow-hidden ">
       {/* Background Glow Effect */}
       <div className="absolute inset-0 -z-10 h-full w-full bg-slate-900 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(30,58,138,0.3),rgba(255,255,255,0))]"></div>
 

@@ -104,7 +104,7 @@ const Structure: React.FC = () => {
         className="px-10 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: false, amount: 0.3 }}
         variants={sectionVariants} // This div itself fades in
       >
         {/* Text Content for Round 1 */}
@@ -158,7 +158,8 @@ const Structure: React.FC = () => {
           variants={imageVariants} // Apply image-specific animation
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          exit="hidden"
+          viewport={{ once: false, amount: 0.1 }}
         >
           <img
             src={i1}
@@ -173,7 +174,8 @@ const Structure: React.FC = () => {
         className="px-10 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        // exit="hidden"
+        viewport={{ once: false, amount: 0.1 }}
         variants={sectionVariants}
       >
         {/* Text Content for Round 2 */}
@@ -203,7 +205,8 @@ const Structure: React.FC = () => {
           variants={imageVariants} // Apply image-specific animation
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          exit = "hidden"
+          viewport={{ once: false, amount: 0.1 }}
         >
           <img
             src={i2}
@@ -218,7 +221,8 @@ const Structure: React.FC = () => {
         className="px-10 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        // exit ='hidden'
+        viewport={{ once: false, amount: 0.1 }}
         variants={sectionVariants}
       >
         {/* Text Content for Round 3 */}
@@ -248,7 +252,8 @@ const Structure: React.FC = () => {
           variants={imageVariants} // Apply image-specific animation
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          exit="hidden"
+          viewport={{ once: false, amount: 0.1 }}
         >
           <img
             src={i3}
