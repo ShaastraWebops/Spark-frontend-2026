@@ -1,12 +1,12 @@
 import React from "react";
 import about from "../../assets/2.jpg";
-import { motion } from "framer-motion"; // 1. Import motion
+import { motion , Variants} from "framer-motion"; // 1. Import motion
 
 const About: React.FC = () => {
   // 2. Define animation variants for a modern look
 
   // A container variant to orchestrate staggered animations
-  const containerVariants = {
+  const containerVariants:Variants = {
     hidden: {},
     visible: {
       transition: {
@@ -17,7 +17,7 @@ const About: React.FC = () => {
   };
 
   // Variant for elements fading in from the left
-  const fadeInLeft = {
+  const fadeInLeft:Variants = {
     hidden: { opacity: 0, x: -50 },
     visible: {
       opacity: 1,
@@ -27,7 +27,7 @@ const About: React.FC = () => {
   };
 
   // Variant for elements fading in from the right
-  const fadeInRight = {
+  const fadeInRight:Variants = {
     hidden: { opacity: 0, x: 50 },
     visible: {
       opacity: 1,
@@ -37,7 +37,7 @@ const About: React.FC = () => {
   };
 
   // Variant for elements fading in from the bottom
-  const fadeInUp = {
+  const fadeInUp:Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,

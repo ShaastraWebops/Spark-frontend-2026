@@ -2,11 +2,11 @@ import React from "react";
 import i1 from "../../assets/1.jpg";
 import i2 from "../../assets/2.jpg";
 import i3 from "../../assets/3.jpg";
-import { motion } from "framer-motion";
+import { motion,Variants } from "framer-motion";
 
 const Structure: React.FC = () => {
   // Main section variant for a general fade-in-slide-up
-  const sectionVariants = {
+  const sectionVariants:Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
       opacity: 1,
@@ -19,7 +19,7 @@ const Structure: React.FC = () => {
   };
 
   // Variant for images with a slight scale-up and fade-in
-  const imageVariants = {
+  const imageVariants:Variants = {
     hidden: { opacity: 0, scale: 0.95, y: 30 },
     visible: {
       opacity: 1,
@@ -34,7 +34,7 @@ const Structure: React.FC = () => {
   };
 
   // Container variant for staggering children animations
-  const listContainerVariants = {
+  const listContainerVariants:Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -45,7 +45,7 @@ const Structure: React.FC = () => {
   };
 
   // Variant for individual list items
-  const listItemVariants = {
+  const listItemVariants:Variants = {
     hidden: { opacity: 0, x: -20 },
     visible: {
       opacity: 1,
@@ -58,7 +58,7 @@ const Structure: React.FC = () => {
   };
 
   // Variant for buttons
-  const buttonVariants = {
+  const buttonVariants:Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
     hover: { scale: 1.05, transition: { duration: 0.2 } },

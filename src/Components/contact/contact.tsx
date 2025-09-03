@@ -1,7 +1,7 @@
 // src/Components/Contact/Contact.tsx
 
 import React from "react";
-import { motion } from "framer-motion"; // ✅ Using Framer Motion
+import { motion, Variants } from "framer-motion"; // ✅ Using Framer Motion
 
 // SVG Icons (unchanged)
 const MailIcon = () => (
@@ -71,7 +71,7 @@ const Contact: React.FC = () => {
   ];
 
   // ✨ Define variants for the container (the grid) to orchestrate animations
-  const containerVariants = {
+  const containerVariants:Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -82,7 +82,7 @@ const Contact: React.FC = () => {
   };
 
   // ✨ Define variants for the items (the cards)
-  const itemVariants = {
+  const itemVariants:Variants = {
     hidden: { opacity: 0, y: 50, scale: 0.9 },
     visible: {
       opacity: 1,

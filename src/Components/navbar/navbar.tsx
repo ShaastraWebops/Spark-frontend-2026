@@ -30,7 +30,7 @@ const navLinks: NavLink[] = [
 const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const location = useLocation(); // Get the current URL location
-  const { data, loading } = useQuery(GET_ME);
+  const { data} = useQuery(GET_ME);
   const isLoggedIn = !!data?.getMe;
   const [logout] = useMutation(LOGOUT);
 
