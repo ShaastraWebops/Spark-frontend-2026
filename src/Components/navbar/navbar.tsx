@@ -118,7 +118,7 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
         }`}
       >
         {/* ✅ ADDED pb-2 FOR PADDING-BOTTOM */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-2">
+        <div className="max-w-7xl mx-auto px-[5%] sm:px-[2%] lg:px-[1%] pb-2">
           <div className="flex items-center justify-between h-16 ">
             {/* Logo */}
             <div className="flex-shrink-0">
@@ -140,7 +140,7 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
             </div>
 
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden [@media(min-width:885px)]:flex items-center space-x-4">
               {navLinks.map((link) => renderLink(link))}
 
               {isLoggedIn ? (
@@ -179,7 +179,7 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
             </div>
 
             {/* Hamburger Menu Button */}
-            <div className="-mr-2 flex md:hidden">
+            <div className="-mr-2 flex [@media(min-width:885px)]:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 type="button"
@@ -225,7 +225,7 @@ const Navbar: React.FC<NavbarProps> = ({ showNavbar, scrollToSection }) => {
         <div
           className={`${
             isMenuOpen ? "block" : "hidden"
-          } md:hidden border-t border-gray-700`}
+          } [@media(min-width:885px)]:hidden border-t border-gray-700`}
           id="mobile-menu"
         >
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">

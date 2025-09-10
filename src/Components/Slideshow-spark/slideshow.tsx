@@ -40,7 +40,7 @@ const Slideshow: React.FC = () => {
     return () => {
       resetTimeout();
     };
-  }, [index, isTransitioning]);
+  }, [index, isTransitioning,images.length]);
 
   const handleDotClick = (idx: number) => {
     if (idx === 0 && index === images.length - 1) {
