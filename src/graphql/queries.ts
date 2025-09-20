@@ -31,7 +31,16 @@ export const GET_USERS = gql`
   query getUsers {
     getUsers {
       id
+      firstName
+      lastName
+      class
+      rollNumber
+      school
+      city
+      sparkCity
       email
+      mobile
+      heardSpark
       role
     }
   }

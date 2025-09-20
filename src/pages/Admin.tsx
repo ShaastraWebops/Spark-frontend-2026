@@ -1,4 +1,3 @@
-
 import {
   Table,
   TableBody,
@@ -58,7 +57,7 @@ export default function AdminPage() {
         component={Paper}
         sx={{
           width: "100%",
-          maxWidth: 800,
+          maxWidth: 1200,
           borderRadius: 3,
           overflow: "hidden",
           boxShadow: 3,
@@ -73,7 +72,34 @@ export default function AdminPage() {
                 #
               </TableCell>
               <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                First Name
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Last Name
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Class
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Roll No
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                School
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                City
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Spark City
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
                 Email
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Mobile
+              </TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                Heard Spark
               </TableCell>
               <TableCell sx={{ color: "white", fontWeight: "bold" }}>
                 Role
@@ -91,7 +117,16 @@ export default function AdminPage() {
                 }}
               >
                 <TableCell>{index + 1}</TableCell>
+                <TableCell>{u.firstName}</TableCell>
+                <TableCell>{u.lastName}</TableCell>
+                <TableCell>{u.class}</TableCell>
+                <TableCell>{u.rollNumber}</TableCell>
+                <TableCell>{u.school}</TableCell>
+                <TableCell>{u.city}</TableCell>
+                <TableCell>{u.sparkCity}</TableCell>
                 <TableCell>{u.email}</TableCell>
+                <TableCell>{u.mobile}</TableCell>
+                <TableCell>{u.heardSpark}</TableCell>
                 <TableCell>{u.role}</TableCell>
               </TableRow>
             ))}

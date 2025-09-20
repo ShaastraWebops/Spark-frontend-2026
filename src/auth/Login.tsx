@@ -53,7 +53,7 @@ const Login = () => {
 
       if (data?.loginUser) {
         const { role } = data.loginUser;
-        // console.log("Login successful, role:", role);   -->  log here in development
+        // console.log("Login successful, role:", role); //-->  log here in development
 
         toast.success("Login successful!");
         setTimeout(() => {
